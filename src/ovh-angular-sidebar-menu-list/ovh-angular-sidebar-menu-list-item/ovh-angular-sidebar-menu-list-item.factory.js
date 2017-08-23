@@ -32,7 +32,6 @@
  *  @param {Boolean=} [options.allowSubItems=false] Flag telling if item allow to have sub items. If true will display an arrow icon before title.
  *  @param {String=} [options.category=none] Add a category to the item. This will be added as a new class to the menu item element.
  *  @param {String=} options.icon Icon added before prefix and title. Example : ovh-font icon!
- *  @param {String=} [options.iconClass=none] Additional class that will be added with the icon.
  *  @param {Number|String=} [options.id=A random Number] Unique id of the SidebarMenuListItem.
  *  @param {Number=} options.level Menu item level.
  *  @param {Object} options.viewAllItem Links to a page that manages all subitems.
