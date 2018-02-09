@@ -131,11 +131,13 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
 
         // string to perform search on
         this.searchable = options.searchable !== false;
-        this.searchKey = angular.isString(this.id) ? this.id : "";
+        this.searchKey = [];
+        this.searchProperties = [];
+        this.addSearchProperty("id");
         if (angular.isString(this.title)) {
-            this.searchKey += " " + this.title;
+            this.addSearchProperty("title");
         }
-        this.searchKey = this.searchKey.toLowerCase();
+
         this.noSearchResults = false;
 
         // use sexy infinite scroll?
@@ -442,7 +444,24 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
      */
     SidebarMenuListItem.prototype.addSearchKey = function (key) {
         if (angular.isString(key)) {
-            this.searchKey += " " + key.toLowerCase();
+            this.searchKey.push(_.trim(key.toLowerCase()));
+        }
+        return this;
+    };
+
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.object:SidebarMenuListItem#addSearchProperty
+     *  @methodOf sidebarMenu.object:SidebarMenuListItem
+     *
+     *  @description
+     *  Add a search property for when searching / filtering items.
+     *
+     *  @returns {SidebarMenuListItem} Current instance of menu item.
+     */
+    SidebarMenuListItem.prototype.addSearchProperty = function (property) {
+        if (angular.isString(property)) {
+            this.searchProperties.push(property);
         }
         return this;
     };
@@ -480,7 +499,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
      *  @methodOf sidebarMenu.object:SidebarMenuListItem
      *
      *  @description
-     *  Search for string "search" in item's searchKey and perform the
+     *  Search for string "search" in item's searchKey or in searchProperties and perform the
      *  search recursively in all subItems.
      *  Items not matching the "search" will be removed from the dom.
      *
@@ -494,7 +513,19 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
         function getMatchingItem (item, search) {
             var matchingItem;
             function isMatchingSearch (item, search) {
-                return item.searchable && item.searchKey.indexOf(search) >= 0;
+                if (!item.searchable) {
+                    return false;
+                }
+
+                if (!_.isEmpty(_.find(item.searchKey, function (searchKey) {
+                    return _.includes(searchKey, search);
+                }))) {
+                    return true;
+                }
+
+                return !_.isEmpty(_.find(item.searchProperties, function (property) {
+                    return _.includes(_.get(item, property, "").toLowerCase(), search);
+                }));
             }
 
             if (isMatchingSearch(item, search)) {

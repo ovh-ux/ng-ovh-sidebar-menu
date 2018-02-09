@@ -148,59 +148,149 @@ describe("factory: SidebarMenuListItem", function () {
 
     describe("SubItems searching", function () {
 
-        it("should use id and title as searchKey by default", function () {
+        it("should use id as searchProperty by default", function () {
+            var factory = new SidebarMenuListItem({
+                id: "hello"                
+            });
+            expect(factory.searchProperties).toEqual(["id"]);
+        });
+
+        it("should use id and title as searchProperties if title is defined", function () {
             var factory = new SidebarMenuListItem({
                 id: "hello",
                 title: "world"
             });
-            expect(factory.searchKey).toEqual("hello world");
+            expect(factory.searchProperties).toEqual(["id", "title"]);
+        });
+
+        it("should add search property", function () {
+            var factory = new SidebarMenuListItem({
+                id: "hello"
+            });
+            expect(factory.searchProperties).toEqual(["id"]);
+            factory.addSearchProperty("title");
+            expect(factory.searchProperties).toEqual(["id", "title"]);
+        });
+
+        it("should use nothing as searchKey by default", function () {
+            var factory = new SidebarMenuListItem({
+                id: "hello",
+                title: "world"
+            });
+
+            expect(factory.searchKey).toEqual([]);
         });
 
         it("should add search key and ignore case", function () {
             var factory = new SidebarMenuListItem({
                 id: "hello"
             });
-            factory.addSearchKey("Foo");
-            expect(factory.searchKey).toEqual("hello foo");
+            factory.addSearchKey("  FoO   ");
+            expect(factory.searchKey).toContain("foo");
         });
 
-        it("should filter sub items", function () {
-            var root = new SidebarMenuListItem({
-                id: "root",
-                allowSearch: true,
-                allowSubItems: true
+        it("should add multiple search key and ignore case", function () {
+            var factory = new SidebarMenuListItem({
+                id: "hello"
             });
-            var child1 = root.addSubItem({
-                id: "child1",
-                allowSubItems: true
+            factory.addSearchKey("  Foo");
+            factory.addSearchKey("Bar   ");
+            expect(factory.searchKey).toContain("foo");
+            expect(factory.searchKey).toContain("bar");
+        });
+
+        describe('Filter sub items', function () {
+
+            var root;
+            var child1;
+            var child2;
+            var child1A;
+            var child2A;
+
+            beforeEach(function () {
+
+                root = new SidebarMenuListItem({
+                    id: "root",
+                    allowSearch: true,
+                    allowSubItems: true
+                });
+                child1 = root.addSubItem({
+                    id: "child1",
+                    allowSubItems: true
+                });
+                child2 = root.addSubItem({
+                    id: "child2",
+                    allowSubItems: true
+                });
+                child1A = child1.addSubItem({
+                    id: "child1A"
+                });
+                child2A = child2.addSubItem({
+                    id: "child2A",
+                    title: "Alicorn"
+                });
+
+                expect(root.getSubItems().length).toEqual(2);
+                expect(root.getSubItems()[0]).toEqual(child1);
+                expect(root.getSubItems()[1]).toEqual(child2);
+
+                expect(root.getSubItems()[0].getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0].getSubItems()[0]).toEqual(child1A);
+                expect(root.getSubItems()[1].getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[1].getSubItems()[0]).toEqual(child2A);
             });
-            var child2 = root.addSubItem({
-                id: "child2",
-                allowSubItems: true
+
+            afterEach(function () {
+
+                root.filterSubItems("");
+
+                expect(root.getSubItems().length).toEqual(2);
+                expect(root.getSubItems()[0]).toEqual(child1);
+                expect(root.getSubItems()[1]).toEqual(child2);
             });
-            var child1A = child1.addSubItem({
-                id: "child1A"
+
+
+            it("should filter on id", function () {
+
+                root.filterSubItems("child2A");
+
+                expect(root.getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0]).toEqual(child2);
             });
-            var child2A = child2.addSubItem({
-                id: "child2A"
+
+            it("should filter on title", function () {
+
+                root.filterSubItems("ali");
+                expect(root.getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0]).toEqual(child2);
+                expect(root.getSubItems()[0].getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0].getSubItems()[0]).toEqual(child2A);
             });
-            child1.addSubItem(child1A);
-            child2.addSubItem(child2A);
 
-            expect(root.getSubItems().length).toEqual(2);
-            expect(root.getSubItems()[0]).toEqual(child1);
-            expect(root.getSubItems()[1]).toEqual(child2);
+            it("should filter on searchKey", function () {
 
-            root.filterSubItems("child2A");
+                child1A.addSearchKey("unicorn");
+                root.filterSubItems("uni");
 
-            expect(root.getSubItems().length).toEqual(1);
-            expect(root.getSubItems()[0]).toEqual(child2);
+                expect(root.getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0].id).toEqual(child1.id);
+                expect(root.getSubItems()[0].getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0].getSubItems()[0].id).toEqual(child1A.id);
+            });
 
-            root.filterSubItems("");
+            it("should filter on searchProperties and searchKey", function () {
 
-            expect(root.getSubItems().length).toEqual(2);
-            expect(root.getSubItems()[0]).toEqual(child1);
-            expect(root.getSubItems()[1]).toEqual(child2);
+                child1A.addSearchKey("unicorn");
+                root.filterSubItems("corn");
+
+                expect(root.getSubItems().length).toEqual(2);
+                expect(root.getSubItems()[0].id).toEqual(child1.id);
+                expect(root.getSubItems()[0].getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0].getSubItems()[0].id).toEqual(child1A.id);
+                expect(root.getSubItems()[1].id).toEqual(child2.id);
+                expect(root.getSubItems()[1].getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[1].getSubItems()[0].id).toEqual(child2A.id);
+            });
         });
 
         it("should not search item with searchable set to false", function () {
