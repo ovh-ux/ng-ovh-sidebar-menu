@@ -134,7 +134,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
         this.searchKey = [];
         this.searchProperties = [];
         this.addSearchProperty("id");
-        if (angular.isString(this.title)) {
+        if (_.isString(this.title)) {
             this.addSearchProperty("title");
         }
 
@@ -443,7 +443,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
      *  @returns {SidebarMenuListItem} Current instance of menu item.
      */
     SidebarMenuListItem.prototype.addSearchKey = function (key) {
-        if (angular.isString(key)) {
+        if (_.isString(key)) {
             this.searchKey.push(_.trim(key.toLowerCase()));
         }
         return this;
@@ -460,7 +460,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
      *  @returns {SidebarMenuListItem} Current instance of menu item.
      */
     SidebarMenuListItem.prototype.addSearchProperty = function (property) {
-        if (angular.isString(property)) {
+        if (_.isString(property)) {
             this.searchProperties.push(property);
         }
         return this;
@@ -524,7 +524,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
                 }
 
                 return !_.isEmpty(_.find(item.searchProperties, function (property) {
-                    return _.includes(_.get(item, property, "").toLowerCase(), search);
+                    return _.includes(_.get(item, property, "").toString().toLowerCase(), search);
                 }));
             }
 
@@ -546,7 +546,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
             var self = this;
 
             // search nothing => clear results
-            if (!angular.isString(search)) {
+            if (!_.isString(search)) {
                 self.displaySearchResults(angular.copy(self.subItemsAdded));
             } else {
                 search = search.toLowerCase(); // ignore case

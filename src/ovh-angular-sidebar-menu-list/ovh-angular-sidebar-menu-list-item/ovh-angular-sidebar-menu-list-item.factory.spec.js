@@ -249,10 +249,18 @@ describe("factory: SidebarMenuListItem", function () {
                 expect(root.getSubItems()[1]).toEqual(child2);
             });
 
-
             it("should filter on id", function () {
 
                 root.filterSubItems("child2A");
+
+                expect(root.getSubItems().length).toEqual(1);
+                expect(root.getSubItems()[0]).toEqual(child2);
+            });
+
+            it("should filter on integer id", function () {
+
+                child2A.id = 314159265359;
+                root.filterSubItems("314"); 
 
                 expect(root.getSubItems().length).toEqual(1);
                 expect(root.getSubItems()[0]).toEqual(child2);
