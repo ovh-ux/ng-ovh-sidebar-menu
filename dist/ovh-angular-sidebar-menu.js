@@ -328,11 +328,13 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", ["$q",
 
         // string to perform search on
         this.searchable = options.searchable !== false;
-        this.searchKey = angular.isString(this.id) ? this.id : "";
-        if (angular.isString(this.title)) {
-            this.searchKey += " " + this.title;
+        this.searchKey = [];
+        this.searchProperties = [];
+        this.addSearchProperty("id");
+        if (_.isString(this.title)) {
+            this.addSearchProperty("title");
         }
-        this.searchKey = this.searchKey.toLowerCase();
+
         this.noSearchResults = false;
 
         // use sexy infinite scroll?
@@ -638,8 +640,25 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", ["$q",
      *  @returns {SidebarMenuListItem} Current instance of menu item.
      */
     SidebarMenuListItem.prototype.addSearchKey = function (key) {
-        if (angular.isString(key)) {
-            this.searchKey += " " + key.toLowerCase();
+        if (_.isString(key)) {
+            this.searchKey.push(_.trim(key.toLowerCase()));
+        }
+        return this;
+    };
+
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.object:SidebarMenuListItem#addSearchProperty
+     *  @methodOf sidebarMenu.object:SidebarMenuListItem
+     *
+     *  @description
+     *  Add a search property for when searching / filtering items.
+     *
+     *  @returns {SidebarMenuListItem} Current instance of menu item.
+     */
+    SidebarMenuListItem.prototype.addSearchProperty = function (property) {
+        if (_.isString(property)) {
+            this.searchProperties.push(property);
         }
         return this;
     };
@@ -677,7 +696,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", ["$q",
      *  @methodOf sidebarMenu.object:SidebarMenuListItem
      *
      *  @description
-     *  Search for string "search" in item's searchKey and perform the
+     *  Search for string "search" in item's searchKey or in searchProperties and perform the
      *  search recursively in all subItems.
      *  Items not matching the "search" will be removed from the dom.
      *
@@ -691,7 +710,19 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", ["$q",
         function getMatchingItem (item, search) {
             var matchingItem;
             function isMatchingSearch (item, search) {
-                return item.searchable && item.searchKey.indexOf(search) >= 0;
+                if (!item.searchable) {
+                    return false;
+                }
+
+                if (!_.isEmpty(_.find(item.searchKey, function (searchKey) {
+                    return _.includes(searchKey, search);
+                }))) {
+                    return true;
+                }
+
+                return !_.isEmpty(_.find(item.searchProperties, function (property) {
+                    return _.includes(_.get(item, property, "").toString().toLowerCase(), search);
+                }));
             }
 
             if (isMatchingSearch(item, search)) {
@@ -712,7 +743,7 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", ["$q",
             var self = this;
 
             // search nothing => clear results
-            if (!angular.isString(search)) {
+            if (!_.isString(search)) {
                 self.displaySearchResults(angular.copy(self.subItemsAdded));
             } else {
                 search = search.toLowerCase(); // ignore case
