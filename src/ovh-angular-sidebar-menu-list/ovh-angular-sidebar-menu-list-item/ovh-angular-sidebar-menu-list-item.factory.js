@@ -80,6 +80,9 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
         this.category = options.category || "none";
         this.status = options.status || "none";
 
+        // action item
+        this.onClick = _.isFunction(options.onClick) ? options.onClick : angular.noop;
+
         this.namespace = options.namespace;
 
         // level informations
