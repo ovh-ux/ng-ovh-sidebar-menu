@@ -18,13 +18,13 @@
  * </pre>
  */
 
-angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
+export default function () {
     "use strict";
 
     var self = this;
 
     var translationPaths = ["../bower_components/ovh-angular-sidebar-menu/dist/ovh-angular-sidebar-menu"];
-    var innerMenuItemTemplatePath = "ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list-item/ovh-angular-sidebar-menu-list-item-inner.html";
+    var innerMenuItemTemplate = require("./ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list-item/ovh-angular-sidebar-menu-list-item-inner.html");
     var minItemsForEnablingSearch = 10;
 
     /*= ====================================
@@ -72,25 +72,6 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
 
     /**
      *  @ngdoc function
-     *  @name sidebarMenu.SidebarMenuProvider#setInnerMenuItemTemplatePath
-     *  @methodOf sidebarMenu.SidebarMenuProvider
-     *
-     *  @description
-     *  Configure the inner menu item template path. This will load your specific inner content instead of the default one. Use it at your own risk.
-     *
-     *  @param {String} templatePath The path of the inner content html file
-     *
-     *  @return {String} The newest html file path
-     */
-    self.setInnerMenuItemTemplatePath = function (templatePath) {
-        if (templatePath) {
-            innerMenuItemTemplatePath = templatePath;
-        }
-        return innerMenuItemTemplatePath;
-    };
-
-    /**
-     *  @ngdoc function
      *  @name sidebarMenu.SidebarMenuProvider#setMinItemsForEnablingSearch
      *  @methodOf sidebarMenu.SidebarMenuProvider
      *
@@ -111,7 +92,7 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
 
     /* -----  End of CONFIGURATION  ------*/
 
-    self.$get = function ($q, $timeout, $state, $translate, $translatePartialLoader, SidebarMenuListItem) {
+    self.$get = function ($q, $timeout, $state, $translate, /*$translatePartialLoader,*/ SidebarMenuListItem) {
 
         /**
          *  @ngdoc service
@@ -195,10 +176,10 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
          *  @return {Promise} void
          */
         sidebarMenuService.loadTranslations = function () {
-            angular.forEach(translationPaths, function (translationPath) {
-                $translatePartialLoader.addPart(translationPath);
-            });
-            return $translate.refresh();
+            // angular.forEach(translationPaths, function (translationPath) {
+            //     $translatePartialLoader.addPart(translationPath);
+            // });
+            // return $translate.refresh();
         };
 
         /* ----------  GETTER  ----------*/
@@ -213,8 +194,8 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
          *
          *  @return {String} The inner menu item template path for displaying the inner html content of an item. If you have configured it with the provider, this will return the configured path.
          */
-        sidebarMenuService.getInnerMenuItemTemplatePath = function () {
-            return innerMenuItemTemplatePath;
+        sidebarMenuService.getInnerMenuItemTemplate = function () {
+            return innerMenuItemTemplate;
         };
 
         /**
@@ -589,4 +570,4 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
         return sidebarMenuService;
     };
 
-});
+};

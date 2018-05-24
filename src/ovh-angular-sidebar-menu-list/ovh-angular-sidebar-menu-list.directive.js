@@ -10,11 +10,11 @@
  *
  *  @param {Array<SidebarMenuListItem>} sidebar-menu-list-items The items to be filled into list element of manager sidebar.
  */
-angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuList", function () {
+export default function () {
     "use strict";
 
     return {
-        templateUrl: "ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list.html",
+        template: require("./ovh-angular-sidebar-menu-list.html"),
         restrict: "A",
         scope: {
             items: "=sidebarMenuListItems",
@@ -25,4 +25,4 @@ angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuList", function
         controllerAs: "ListCtrl",
         controller: angular.noop
     };
-});
+};

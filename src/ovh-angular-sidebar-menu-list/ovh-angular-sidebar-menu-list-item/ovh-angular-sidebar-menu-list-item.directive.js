@@ -10,11 +10,11 @@
  *
  *  @param {SidebarMenuListItem} sidebar-menu-list-item The menu item instance to display.
  */
-angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuListItem", function ($compile) {
+export default function ($compile) {
     "use strict";
 
     return {
-        templateUrl: "ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list-item/ovh-angular-sidebar-menu-list-item.html",
+        template: require("./ovh-angular-sidebar-menu-list-item.html"),
         restrict: "A",
         scope: {
             item: "=sidebarMenuListItem"
@@ -50,7 +50,7 @@ angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuListItem", func
         },
         bindToController: true,
         controllerAs: "ItemMenuCtrl",
-        controller: function ($scope, $timeout, SidebarMenu) {
+        controller: function ($scope, $timeout, $sce, SidebarMenu) {
 
             var self = this;
 
@@ -66,8 +66,9 @@ angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuListItem", func
             =            HELPERS            =
             ===============================*/
 
-            self.getInnerTemplateUrl = function () {
-                return SidebarMenu.getInnerMenuItemTemplatePath();
+            self.getInnerTemplate = function () {
+                console.log(SidebarMenu.getInnerMenuItemTemplate());
+                return $sce.trustAsHtml(SidebarMenu.getInnerMenuItemTemplate());
             };
 
             self.getMinItemsForEnablingSearch = function () {
@@ -178,4 +179,4 @@ angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuListItem", func
             /* -----  End of ACTIONS  ------*/
         }
     };
-});
+};

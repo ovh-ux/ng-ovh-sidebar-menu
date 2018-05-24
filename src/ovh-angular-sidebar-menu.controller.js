@@ -1,4 +1,4 @@
-angular.module("ovh-angular-sidebar-menu").controller("SidebarMenuCtrl", function ($transitions, $compile, $state, SidebarMenu) {
+export default function ($transitions, $compile, $state, SidebarMenu) {
     "use strict";
 
     var self = this;
@@ -45,4 +45,4 @@ angular.module("ovh-angular-sidebar-menu").controller("SidebarMenuCtrl", functio
 
     init();
 
-});
+};

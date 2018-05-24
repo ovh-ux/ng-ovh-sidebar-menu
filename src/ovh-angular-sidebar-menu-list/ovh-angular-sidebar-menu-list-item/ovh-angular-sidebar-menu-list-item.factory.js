@@ -57,7 +57,7 @@
  *  @param {String} [options.namespace] Namespace equals to Sidebar namespace.
  */
 
-angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", function ($q, $timeout) {
+export default function ($q, $timeout) {
     "use strict";
 
     /*= ==================================
@@ -539,4 +539,4 @@ angular.module("ovh-angular-sidebar-menu").factory("SidebarMenuListItem", functi
 
     return SidebarMenuListItem;
 
-});
+};
