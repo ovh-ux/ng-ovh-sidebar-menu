@@ -5,7 +5,7 @@
   "keywords": [
     "angular"
   ],
-  "main": "./dist/sidebar-menu.js",
+  "main": "./dist/sidebar-menu.min.js",
   "repository": "ovh-ux/ovh-angular-sidebar-menu",
   "scripts": {
     "test": "grunt test"
