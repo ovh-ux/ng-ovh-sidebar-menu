@@ -57,7 +57,7 @@
  *  @param {String} [options.namespace] Namespace equals to Sidebar namespace.
  */
 
-export default function ($q, $timeout) {
+export default /* @ngInject */ function ($q, $timeout) {
     "use strict";
 
     /*= ==================================

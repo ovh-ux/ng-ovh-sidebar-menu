@@ -1,4 +1,4 @@
-export default function ($transitions, $compile, $state, SidebarMenu) {
+export default /* @ngInject */ function ($transitions, $compile, $state, SidebarMenu) {
     "use strict";
 
     var self = this;

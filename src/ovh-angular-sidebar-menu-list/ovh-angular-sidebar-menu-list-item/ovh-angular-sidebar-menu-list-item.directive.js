@@ -10,7 +10,7 @@
  *
  *  @param {SidebarMenuListItem} sidebar-menu-list-item The menu item instance to display.
  */
-export default function ($compile) {
+export default /* @ngInject */ function ($compile) {
     "use strict";
 
     return {
