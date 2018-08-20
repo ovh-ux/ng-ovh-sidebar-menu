@@ -92,16 +92,14 @@ export default function () {
 
     /* -----  End of CONFIGURATION  ------*/
 
-    self.$get = function ($q, $timeout, $state, $translate, /*$translatePartialLoader,*/ SidebarMenuListItem) {
+    self.$get = ["$q", "$state", "SidebarMenuListItem", function ($q, $state, SidebarMenuListItem) {
 
         /**
          *  @ngdoc service
          *  @name sidebarMenu.service:SidebarMenu
          *
          *  @requires $q
-         *  @requires $timeout
          *  @requires $state
-         *  @requires $translate
          *  @requires $translatePartialLoader
          *  @requires SidebarMenuListItem
          *
@@ -568,6 +566,6 @@ export default function () {
         };
 
         return sidebarMenuService;
-    };
+    }];
 
 };

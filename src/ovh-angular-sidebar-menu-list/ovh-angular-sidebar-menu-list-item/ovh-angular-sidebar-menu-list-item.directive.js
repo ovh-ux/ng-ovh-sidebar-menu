@@ -50,7 +50,7 @@ export default /* @ngInject */ function ($compile) {
         },
         bindToController: true,
         controllerAs: "ItemMenuCtrl",
-        controller: function ($scope, $timeout, $sce, SidebarMenu) {
+        controller: /* @ngInject */ function ($scope, $timeout, $sce, SidebarMenu) {
 
             var self = this;
 
@@ -67,7 +67,6 @@ export default /* @ngInject */ function ($compile) {
             ===============================*/
 
             self.getInnerTemplate = function () {
-                console.log(SidebarMenu.getInnerMenuItemTemplate());
                 return $sce.trustAsHtml(SidebarMenu.getInnerMenuItemTemplate());
             };
 

@@ -8,6 +8,7 @@
  *  See README for more informations.
  */
 
+import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import translate from 'angular-translate';
 import actionsMenu from 'ovh-angular-actions-menu';
