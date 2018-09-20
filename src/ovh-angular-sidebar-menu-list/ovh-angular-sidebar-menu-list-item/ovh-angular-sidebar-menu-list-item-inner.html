@@ -1,9 +1,14 @@
 <!-- ARROW -->
 <span class="item-arrow"
-      data-ng-class="{ 'no-sub' : !ItemMenuCtrl.item.allowSubItems }"
+      data-ng-class="{
+          'no-sub' : !ItemMenuCtrl.item.allowSubItems
+        }"
       data-ng-if="!ItemMenuCtrl.item.loading">
     <i class="ovh-font"
-       data-ng-class="{ 'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen, 'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen }"
+       data-ng-class="{
+           'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen,
+           'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen
+        }"
        data-ng-if="ItemMenuCtrl.item.allowSubItems">
     </i>
 </span>

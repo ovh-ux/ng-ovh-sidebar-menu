@@ -1,5 +1,4 @@
 <div class="item-content">
-
     <!-- item has sref and allow sub items -->
     <a class="menu-item"
        title="{{ ItemMenuCtrl.item.getTitle() }}"
@@ -8,40 +7,40 @@
        data-ui-sref="{{ :: ItemMenuCtrl.item.getFullSref() }}"
        >
         <!-- ARROW -->
-            <span class="item-arrow"
-            data-ng-class="{ 'no-sub' : !ItemMenuCtrl.item.allowSubItems }"
-            data-ng-if="!ItemMenuCtrl.item.loading">
+        <span class="item-arrow"
+              data-ng-class="{ 'no-sub' : !ItemMenuCtrl.item.allowSubItems }"
+              data-ng-if="!ItemMenuCtrl.item.loading">
             <i class="ovh-font"
-            data-ng-class="{ 'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen, 'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen }"
-            data-ng-if="ItemMenuCtrl.item.allowSubItems">
+               data-ng-class="{ 'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen, 'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen }"
+               data-ng-if="ItemMenuCtrl.item.allowSubItems">
             </i>
-            </span>
+        </span>
 
-            <!-- LOADING -->
-            <span class="item-loading"
+        <!-- LOADING -->
+        <span class="item-loading"
             data-ng-if="ItemMenuCtrl.item.loading">
             <div class="oui-spinner oui-spinner_s">
-            <div class="oui-spinner__container">
-                <div class="oui-spinner__image"></div>
+                <div class="oui-spinner__container">
+                    <div class="oui-spinner__image"></div>
+                </div>
             </div>
-            </div>
-            </span>
+        </span>
 
-            <!-- ITEM ICON -->
-            <span class="item-icon"
-            data-ng-if="ItemMenuCtrl.item.icon">
+        <!-- ITEM ICON -->
+        <span class="item-icon"
+              data-ng-if="ItemMenuCtrl.item.icon">
             <i data-ng-class="ItemMenuCtrl.item.icon"></i>
-            </span>
+        </span>
 
-            <!-- ITEM PREFIX -->
-            <span class="item-prefix"
-            data-ng-bind="ItemMenuCtrl.item.prefix">
-            </span>
+        <!-- ITEM PREFIX -->
+        <span class="item-prefix"
+              data-ng-bind="ItemMenuCtrl.item.prefix">
+        </span>
 
-            <!-- ITEM TITLE -->
-            <span class="item-title"
-            data-ng-bind="ItemMenuCtrl.item.title">
-            </span>
+        <!-- ITEM TITLE -->
+        <span class="item-title"
+              data-ng-bind="ItemMenuCtrl.item.title">
+        </span>
     </a>
 
     <!-- TOGGLE BUTTON -->
@@ -53,45 +52,47 @@
             >
             <!-- ARROW -->
             <span class="item-arrow"
-            data-ng-class="{ 'no-sub' : !ItemMenuCtrl.item.allowSubItems }"
-            data-ng-if="!ItemMenuCtrl.item.loading">
-            <i class="ovh-font"
-            data-ng-class="{ 'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen, 'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen }"
-            data-ng-if="ItemMenuCtrl.item.allowSubItems">
-            </i>
+                  data-ng-class="{ 'no-sub' : !ItemMenuCtrl.item.allowSubItems }"
+                  data-ng-if="!ItemMenuCtrl.item.loading">
+                <i class="ovh-font"
+                   data-ng-class="{ 'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen, 'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen }"
+                   data-ng-if="ItemMenuCtrl.item.allowSubItems">
+                </i>
             </span>
 
             <!-- LOADING -->
             <span class="item-loading"
-            data-ng-if="ItemMenuCtrl.item.loading">
-            <div class="oui-spinner oui-spinner_s">
-            <div class="oui-spinner__container">
-                <div class="oui-spinner__image"></div>
-            </div>
-            </div>
+                  data-ng-if="ItemMenuCtrl.item.loading">
+                <div class="oui-spinner oui-spinner_s">
+                    <div class="oui-spinner__container">
+                        <div class="oui-spinner__image"></div>
+                    </div>
+                </div>
             </span>
 
             <!-- ITEM ICON -->
             <span class="item-icon"
-            data-ng-if="ItemMenuCtrl.item.icon">
-            <i data-ng-class="ItemMenuCtrl.item.icon"></i>
+                  data-ng-if="ItemMenuCtrl.item.icon">
+                <i data-ng-class="ItemMenuCtrl.item.icon"></i>
             </span>
 
             <!-- ITEM PREFIX -->
             <span class="item-prefix"
-            data-ng-bind="ItemMenuCtrl.item.prefix">
+                  data-ng-bind="ItemMenuCtrl.item.prefix">
             </span>
 
             <!-- ITEM TITLE -->
             <span class="item-title"
-            data-ng-bind="ItemMenuCtrl.item.title">
+                  data-ng-bind="ItemMenuCtrl.item.title">
             </span>
     </button>
 
     <!-- ERROR MESSAGE -->
     <div class="group-error-wrapper"
          data-ng-if="ItemMenuCtrl.item.error && ItemMenuCtrl.errorVisible">
-            <div><i class="ovh-font ovh-font-filled-warning"></i></div>
+            <div>
+                <i class="ovh-font ovh-font-filled-warning"></i>
+            </div>
             <div>
                 <p data-ng-bind="ItemMenuCtrl.item.error"></p>
                 <button class="btn btn-default"
@@ -109,45 +110,50 @@
        target="{{ ItemMenuCtrl.item.target }}"
        >
        <!-- ARROW -->
-            <span class="item-arrow"
-            data-ng-class="{ 'no-sub' : !ItemMenuCtrl.item.allowSubItems }"
+        <span class="item-arrow"
+              data-ng-class="{
+                    'no-sub' : !ItemMenuCtrl.item.allowSubItems
+                }"
             data-ng-if="!ItemMenuCtrl.item.loading">
             <i class="ovh-font"
-            data-ng-class="{ 'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen, 'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen }"
+               data-ng-class="{
+                    'ovh-font-small-arrow-right' : !ItemMenuCtrl.item.isOpen,
+                    'ovh-font-small-arrow-down' : ItemMenuCtrl.item.isOpen
+                }"
             data-ng-if="ItemMenuCtrl.item.allowSubItems">
             </i>
-            </span>
+        </span>
 
-            <!-- LOADING -->
-            <span class="item-loading"
+        <!-- LOADING -->
+        <span class="item-loading"
             data-ng-if="ItemMenuCtrl.item.loading">
             <div class="oui-spinner oui-spinner_s">
-            <div class="oui-spinner__container">
-                <div class="oui-spinner__image"></div>
+                <div class="oui-spinner__container">
+                    <div class="oui-spinner__image"></div>
+                </div>
             </div>
-            </div>
-            </span>
+        </span>
 
-            <!-- ITEM ICON -->
-            <span class="item-icon"
+        <!-- ITEM ICON -->
+        <span class="item-icon"
             data-ng-if="ItemMenuCtrl.item.icon">
             <i data-ng-class="ItemMenuCtrl.item.icon"></i>
-            </span>
+        </span>
 
-            <!-- ITEM PREFIX -->
-            <span class="item-prefix"
+        <!-- ITEM PREFIX -->
+        <span class="item-prefix"
             data-ng-bind="ItemMenuCtrl.item.prefix">
-            </span>
+        </span>
 
-            <!-- ITEM TITLE -->
-            <span class="item-title"
+        <!-- ITEM TITLE -->
+        <span class="item-title"
             data-ng-bind="ItemMenuCtrl.item.title">
-            </span>
+        </span>
     </a>
 
     <!-- SLIDING CONTENT -->
     <div class="group-content-wrapper"
-         data-ng-if="ItemMenuCtrl.item.isOpen"
+         data-ng-slide-down="ItemMenuCtrl.item.isOpen"
          data-duration="0.3">
 
         <div class="group-toggle-content">
@@ -177,10 +183,10 @@
             <div class="menu-view-all" data-ng-if="ItemMenuCtrl.item.viewMore.enabled">
                 <div class="menu-view-all-inner">
                     <button class="menu-item text-left"
-                        title="{{ ItemMenuCtrl.item.viewMore.title }}"
-                        type="button"
-                        data-ng-click="ItemMenuCtrl.viewMore()"
-                        data-ng-disabled="ItemMenuCtrl.item.viewMore.loading">
+                            title="{{ ItemMenuCtrl.item.viewMore.title }}"
+                            type="button"
+                            data-ng-click="ItemMenuCtrl.viewMore()"
+                            data-ng-disabled="ItemMenuCtrl.item.viewMore.loading">
                         <div class="oui-spinner oui-spinner_s"
                              data-ng-if="ItemMenuCtrl.item.viewMore.loading">
                             <div class="oui-spinner__container">

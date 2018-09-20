@@ -4002,6 +4002,10 @@ ng-annotate@^1.2.1:
     stringset "~0.2.1"
     tryor "~0.1.2"
 
+ng-slide-down@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/ng-slide-down/-/ng-slide-down-0.4.2.tgz#d734d823b3369f3ef651d708556a9647cf49d8cb"
+
 nice-try@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.4.tgz#d93962f6c52f2c1558c0fbda6d512819f1efe1c4"
