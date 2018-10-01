@@ -12,13 +12,15 @@ let config = {
     module: {
         rules: [{
             test: /\.html$/,
-            loader: 'raw-loader'
+            loader: 'raw-loader',
         }]
     },
     plugins: [
         new webpack.ProvidePlugin({
             $: 'jquery',
-            jquery: 'jquery'
+            jQuery: 'jquery',
+            jquery: 'jquery',
+            'window.jQuery': 'jquery'
         }),
         new ngAnnotatePlugin({
             add: true,

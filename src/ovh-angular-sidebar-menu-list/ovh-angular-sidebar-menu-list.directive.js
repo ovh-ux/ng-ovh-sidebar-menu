@@ -15,7 +15,7 @@ export default function () {
 
     return {
         template: require("./ovh-angular-sidebar-menu-list.html"),
-        restrict: "A",
+        restrict: "AE",
         scope: {
             items: "=sidebarMenuListItems",
             namespace: "=sidebarMenuListNamespace"
