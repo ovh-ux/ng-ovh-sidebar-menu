@@ -250,6 +250,10 @@ angular-translate@^2.17.0:
   dependencies:
     angular ">=1.2.26 <=1.7"
 
+angular-vs-repeat@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/angular-vs-repeat/-/angular-vs-repeat-2.0.9.tgz#fc2713f14223c8dccf37e7b900b2dadb932c2b0b"
+
 angular@1.6.10:
   version "1.6.10"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.10.tgz#eed3080a34d29d0f681ff119b18ce294e3f74826"
@@ -3502,6 +3506,10 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+less-plugin-remcalc@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/less-plugin-remcalc/-/less-plugin-remcalc-0.1.0.tgz#34bce158cd24d2a14efa8984e01b2b9d0420d4cc"
+
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.3.0.tgz#3b09924edf9f083c0490fdd4c0bc4421e04764ee"
@@ -4260,6 +4268,12 @@ osenv@^0.1.4:
 ovh-angular-actions-menu@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ovh-angular-actions-menu/-/ovh-angular-actions-menu-3.2.0.tgz#5e997696750fc601a169067e03d3f03d6e392952"
+
+ovh-ui-kit@^2.20.0:
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/ovh-ui-kit/-/ovh-ui-kit-2.20.2.tgz#63715e743e0299cb2c8d2624211d0f8c6cf82e5e"
+  dependencies:
+    less-plugin-remcalc "^0.1.0"
 
 p-cancelable@^0.3.0:
   version "0.3.0"

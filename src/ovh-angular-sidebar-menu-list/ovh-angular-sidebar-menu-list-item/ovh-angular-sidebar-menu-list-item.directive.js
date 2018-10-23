@@ -26,13 +26,17 @@ export default /* @ngInject */ function ($compile) {
 
             if (sidebarMenuListItemCtrl.item.allowSubItems) {
                 // get nav element - where to append sub menu element
-                navElement = $element.find("nav.menu-sub-items");
+                navElement = $element.find("div.menu-sub-items");
+
                 if (!navElement.find("> .sub-menu").length) {
-                    $compile("<ul data-sidebar-menu-list data-sidebar-menu-list-items='ItemMenuCtrl.item.subItems' class='sub-menu menu-level-{{ ItemMenuCtrl.item.level + 1 }}'></ul>")($scope, function (cloned) {
+                    $compile(`<sidebar-menu-list
+                        data-sidebar-menu-list-items='ItemMenuCtrl.item.subItems' class='sub-menu'>
+                    </sidebar-menu-list>`)($scope, function (cloned) {
                         navElement.append(cloned);
                     });
                 }
                 sidebarMenuListItemCtrl.groupScrollElement = $element.find(".group-scroll-content");
+                // sidebarMenuListItemCtrl.groupScrollElement = $element.find(".oui-sidebar-list");
 
                 if (sidebarMenuListItemCtrl.item.infiniteScroll) {
                     sidebarMenuListItemCtrl.groupScrollElement.on("scroll", function () {
