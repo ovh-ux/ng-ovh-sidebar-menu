@@ -13,27 +13,31 @@
  *          // add translation path
  *          SidebarMenuProvider.addTranslationPath("../components/sidebar");
  *          // configure the inner item content html file
- *          SidebarMenuProvider.setInnerMenuItemTemplatePath("../components/my-dangerous-and-risky-configuration.html");
+ *          SidebarMenuProvider.setInnerMenuItemTemplatePath(
+ *            "../components/my-dangerous-and-risky-configuration.html"
+ *          );
  *      });
  * </pre>
  */
 
+import angular from 'angular';
+import _ from 'lodash';
+
+import innerMenuItemTemplate from './ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list-item/ovh-angular-sidebar-menu-list-item-inner.html';
+
 export default function () {
-    "use strict";
+  const self = this;
 
-    var self = this;
+  let translationPaths = ['../bower_components/ovh-angular-sidebar-menu/dist/ovh-angular-sidebar-menu'];
+  let minItemsForEnablingSearch = 10;
 
-    var translationPaths = ["../bower_components/ovh-angular-sidebar-menu/dist/ovh-angular-sidebar-menu"];
-    var innerMenuItemTemplate = require("./ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list-item/ovh-angular-sidebar-menu-list-item-inner.html");
-    var minItemsForEnablingSearch = 10;
-
-    /*= ====================================
+  /*= ====================================
     =            CONFIGURATION            =
-    =====================================*/
+    ===================================== */
 
-    /* ----------  TRANSLATION  ----------*/
+  /* ----------  TRANSLATION  ----------*/
 
-    /**
+  /**
      *  @ngdoc function
      *  @name sidebarMenu.SidebarMenuProvider#clearTranslationPath
      *  @methodOf sidebarMenu.SidebarMenuProvider
@@ -43,12 +47,12 @@ export default function () {
      *
      *  @return {Array} The list of translations to load.
      */
-    self.clearTranslationPath = function () {
-        translationPaths = [];
-        return translationPaths;
-    };
+  self.clearTranslationPath = function clearTranslationPath() {
+    translationPaths = [];
+    return translationPaths;
+  };
 
-    /**
+  /**
      *  @ngdoc function
      *  @name sidebarMenu.SidebarMenuProvider#addTranslationPath
      *  @methodOf sidebarMenu.SidebarMenuProvider
@@ -60,41 +64,41 @@ export default function () {
      *
      *  @return {Array} The list of translations to load.
      */
-    self.addTranslationPath = function (translationPath) {
-        if (translationPath) {
-            translationPaths.push(translationPath);
-        }
+  self.addTranslationPath = function addTranslationPath(translationPath) {
+    if (translationPath) {
+      translationPaths.push(translationPath);
+    }
 
-        return translationPaths;
-    };
+    return translationPaths;
+  };
 
-    /* ----------  INNER MENU ITEM TEMPLATE  ----------*/
+  /* ----------  INNER MENU ITEM TEMPLATE  ----------*/
 
-    /**
+  /**
      *  @ngdoc function
      *  @name sidebarMenu.SidebarMenuProvider#setMinItemsForEnablingSearch
      *  @methodOf sidebarMenu.SidebarMenuProvider
      *
      *  @description
-     *  Configure the minimum items length for enabling search. By default the min items is set to 10.
+     *  Configure the minimum items length for enabling search.
+     *  By default the min items is set to 10.
      *
      *  @param {Number} minItems The new value for enabling search.
      *
      *  @return {Number} The new value setted.
      */
-    self.setMinItemsForEnablingSearch = function (minItems) {
-        if (_.isNumber(minItems)) {
-            minItemsForEnablingSearch = minItems;
-        }
+  self.setMinItemsForEnablingSearch = function setMinItemsForEnablingSearch(minItems) {
+    if (_.isNumber(minItems)) {
+      minItemsForEnablingSearch = minItems;
+    }
 
-        return minItemsForEnablingSearch;
-    };
+    return minItemsForEnablingSearch;
+  };
 
-    /* -----  End of CONFIGURATION  ------*/
+  /* -----  End of CONFIGURATION  ------*/
 
-    self.$get = ["$q", "$state", "SidebarMenuListItem", function ($q, $state, SidebarMenuListItem) {
-
-        /**
+  self.$get = ['$q', '$state', 'SidebarMenuListItem', function $get($q, $state, SidebarMenuListItem) {
+    /**
          *  @ngdoc service
          *  @name sidebarMenu.service:SidebarMenu
          *
@@ -104,41 +108,43 @@ export default function () {
          *  @requires SidebarMenuListItem
          *
          *  @description
-         *  The `SidebarMenu` service is actual core of sidebarMenu module. This service manage the content of the sidebar menu and the different state (active, open, ...) of its items.
+         *  The `SidebarMenu` service is actual core of sidebarMenu module.
+         *  This service manage the content of the sidebar menu and the different state
+         *  (active, open, ...) of its items.
          */
-        var sidebarMenuService = {
-            items: [],
-            actionsMenuOptions: [],
-            loadDeferred: $q.defer(),
-            initPromise: $q.when(true)
-        };
+    const sidebarMenuService = {
+      items: [],
+      actionsMenuOptions: [],
+      loadDeferred: $q.defer(),
+      initPromise: $q.when(true),
+    };
 
-        /* ----------  INITIALIZATION LOADING  ----------*/
+    /* ----------  INITIALIZATION LOADING  ----------*/
 
-        /**
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#setInitializationPromise
          *  @methodOf sidebarMenu.service:SidebarMenu
          *
          *  @description
-         *  Let you configuring an initialization promise before displaying content of sidebar-menu. This can be done in angular run phase.
-         *  For example you can configure a promise that return the number of services per sections, ...
+         *  Let you configuring an initialization promise before displaying content of sidebar-menu.
+         *  This can be done in angular run phase.
+         *  For example you can configure a promise that return the number of
+         *  services per sections, ...
          *
          *  @param {Promise} initPromise A promise object.
          *
          *  @return {Promise} The initialized promise.
          */
-        sidebarMenuService.setInitializationPromise = function (initPromise) {
-            var self = this;
+    sidebarMenuService.setInitializationPromise = function setInitializationPromise(initPromise) {
+      if (initPromise && initPromise.then) {
+        this.initPromise = initPromise;
+      }
 
-            if (initPromise && initPromise.then) {
-                self.initPromise = initPromise;
-            }
+      return initPromise;
+    };
 
-            return initPromise;
-        };
-
-        /**
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#loadInit
          *  @methodOf sidebarMenu.service:SidebarMenu
@@ -146,57 +152,59 @@ export default function () {
          *  @description
          *  Load the configured translations and initialization promise.
          *
-         *  @return {Promise} That resolve the loadDeferred object with initialization promise returns values.
+         *  @return {Promise} That resolve the loadDeferred object with initialization promise
+         *  returns values.
          */
-        sidebarMenuService.loadInit = function () {
-            var self = this;
+    sidebarMenuService.loadInit = function loadInit() {
+      return $q.all({
+        translations: this.loadTranslations(),
+        init: this.initPromise,
+      }).then((data) => {
+        this.loadDeferred.resolve(data.init);
+        this.manageStateChange();
+        return this.loadDeferred.promise;
+      });
+    };
 
-            return $q.all({
-                translations: self.loadTranslations(),
-                init: self.initPromise
-            }).then(function (data) {
-                self.loadDeferred.resolve(data.init);
-                self.manageStateChange();
-                return self.loadDeferred.promise;
-            });
-        };
+    /* ----------  TRANSLATIONS  ----------*/
 
-        /* ----------  TRANSLATIONS  ----------*/
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#loadTranslations
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Load the default translations of manager sidebar component and the extra translations
+     *  files that you have added (if some).
+     *
+     *  @return {Promise} void
+     */
+    sidebarMenuService.loadTranslations = function () {
+      // angular.forEach(translationPaths, function (translationPath) {
+      //     $translatePartialLoader.addPart(translationPath);
+      // });
+      // return $translate.refresh();
+    };
 
-        /**
-         *  @ngdoc method
-         *  @name sidebarMenu.service:SidebarMenu#loadTranslations
-         *  @methodOf sidebarMenu.service:SidebarMenu
-         *
-         *  @description
-         *  Load the default translations of manager sidebar component and the extra translations files that you have added (if some).
-         *
-         *  @return {Promise} void
-         */
-        sidebarMenuService.loadTranslations = function () {
-            // angular.forEach(translationPaths, function (translationPath) {
-            //     $translatePartialLoader.addPart(translationPath);
-            // });
-            // return $translate.refresh();
-        };
+    /* ----------  GETTER  ----------*/
 
-        /* ----------  GETTER  ----------*/
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#getInnerMenuItemTemplatePath
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Get the inner menu item template path for displaying the inner html content of an item.
+     *
+     *  @return {String} The inner menu item template path for displaying the inner html content
+     *  of an item. If you have configured it with the provider, this will return the
+     *  configured path.
+     */
+    sidebarMenuService.getInnerMenuItemTemplate = function getInnerMenuItemTemplate() {
+      return innerMenuItemTemplate;
+    };
 
-        /**
-         *  @ngdoc method
-         *  @name sidebarMenu.service:SidebarMenu#getInnerMenuItemTemplatePath
-         *  @methodOf sidebarMenu.service:SidebarMenu
-         *
-         *  @description
-         *  Get the inner menu item template path for displaying the inner html content of an item.
-         *
-         *  @return {String} The inner menu item template path for displaying the inner html content of an item. If you have configured it with the provider, this will return the configured path.
-         */
-        sidebarMenuService.getInnerMenuItemTemplate = function () {
-            return innerMenuItemTemplate;
-        };
-
-        /**
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#getMinItemsForEnablingSearch
          *  @methodOf sidebarMenu.service:SidebarMenu
@@ -206,42 +214,45 @@ export default function () {
          *
          *  @return {Number} The minimum items length for enabling search.
          */
-        sidebarMenuService.getMinItemsForEnablingSearch = function () {
-            return minItemsForEnablingSearch;
-        };
+    sidebarMenuService.getMinItemsForEnablingSearch = function () {
+      return minItemsForEnablingSearch;
+    };
 
-        /* ----------  ITEMS MANAGEMENT  ----------*/
+    /* ----------  ITEMS MANAGEMENT  ----------*/
 
-        /**
-         *  @ngdoc method
-         *  @name sidebarMenu.service:SidebarMenu#addMenuItem
-         *  @methodOf sidebarMenu.service:SidebarMenu
-         *
-         *  @description
-         *  Add a menu item to manager sidebar. It could be directly added as "root" element or to an already existing item.
-         *
-         *  @param {Object} itemOptions The options for adding a new manager sidebar menu item. See {@link sidebarMenu.object:SidebarMenuListItem SidebarMenuListItem} constructor for more details.
-         *  @param {SidebarMenuListItem} parentItem The parent where to add the new sidebar menu item. If not specified, a "root" item will be added.
-         *
-         *  @return {SidebarMenuListItem} The added sidebar menu item.
-         */
-        sidebarMenuService.addMenuItem = function (itemOptions, parentItem) {
-            var self = this;
-            var menuItem;
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#addMenuItem
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Add a menu item to manager sidebar. It could be directly added as "root" element or to
+     *  an already existing item.
+     *
+     *  @param {Object} itemOptions The options for adding a new manager sidebar menu item.
+     *  See {@link sidebarMenu.object:SidebarMenuListItem SidebarMenuListItem} constructor
+     *  for more details.
+     *  @param {SidebarMenuListItem} parentItem The parent where to add the new sidebar
+     *  menu item. If not specified, a "root" item will be added.
+     *
+     *  @return {SidebarMenuListItem} The added sidebar menu item.
+     */
+    sidebarMenuService.addMenuItem = function addMenuItem(itemOptions, parentItem) {
+      let menuItem;
 
-            if (!parentItem) {
-                itemOptions.level = 1;
-                menuItem = new SidebarMenuListItem(itemOptions);
-                self.items.push(menuItem);
-            } else {
-                itemOptions.level = parentItem.level + 1;
-                menuItem = parentItem.addSubItem(itemOptions);
-            }
+      if (!parentItem) {
+        _.set(itemOptions, 'level', 1);
+        menuItem = new SidebarMenuListItem(itemOptions);
+        this.items.push(menuItem);
+      } else {
+        _.set(itemOptions, 'level', parentItem.level + 1);
+        menuItem = parentItem.addSubItem(itemOptions);
+      }
 
-            return menuItem;
-        };
+      return menuItem;
+    };
 
-        /**
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#addMenuItems
          *  @methodOf sidebarMenu.service:SidebarMenu
@@ -249,192 +260,195 @@ export default function () {
          *  @description
          *  Add multiple sidebar menu items to an existing sidebar menu item (or as "root" items).
          *
-         *  @param {Array<Object>} itemsOptions A list of item options to add to sidebar menu. See {@link sidebarMenu.object:SidebarMenuListItem SidebarMenuListItem} constructor for more details.
-         *  @param {SidebarMenuListItem} parentItem The parent where to add the new sidebar menu items. If not specified, "root" items will be added.
+         *  @param {Array<Object>} itemsOptions A list of item options to add to sidebar menu.
+         *  See {@link sidebarMenu.object:SidebarMenuListItem SidebarMenuListItem} constructor
+         *  for more details.
+         *  @param {SidebarMenuListItem} parentItem The parent where to add the new sidebar menu
+         *  items. If not specified, "root" items will be added.
          *
          *  @return {SidebarMenu} Current SidebarMenu service
          */
-        sidebarMenuService.addMenuItems = function (itemsOptions, parentItem) {
-            var self = this;
+    sidebarMenuService.addMenuItems = function addMenuItems(itemsOptions, parentItem) {
+      angular.forEach(itemsOptions, (itemOptions) => {
+        this.addMenuItem(itemOptions, parentItem);
+      });
 
-            angular.forEach(itemsOptions, function (itemOptions) {
-                self.addMenuItem(itemOptions, parentItem);
+      return this;
+    };
+
+    /* ----------  SIDEBAR ACTIONS  ----------*/
+
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#manageMenuItemOpenAndActiveState
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Manage the open state and the active state of items of the manager sidebar menu.
+     *
+     *  @param {SidebarMenuListItem} menuItem The clicked sidebar menu item.
+     *
+     *  @return {SidebarMenu} Current SidebarMenu service
+     */
+    sidebarMenuService.manageMenuItemOpenAndActiveState = function manageMenuItemOpenAndActiveState(
+      menuItem,
+    ) {
+      return this.toggleMenuItemOpenState(menuItem).manageActiveMenuItem(menuItem);
+    };
+
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#toggleMenuItemOpenState
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Manage the open state of items of the manager sidebar menu. This will ensure that only
+     *  one item is open at a time.
+     *
+     *  @param {SidebarMenuListItem} menuItem The clicked sidebar menu item.
+     *
+     *  @return {SidebarMenu} Current SidebarMenu service
+     */
+    sidebarMenuService.toggleMenuItemOpenState = function toggleMenuItemOpenState(menuItem) {
+      const pathToMenuItem = this.getPathToMenuItem(menuItem).path;
+      const openedItems = _.filter(this.getAllMenuItems(), { isOpen: true });
+
+      // we simply close items that does not belong to the path to menuItem
+      _.each(_.difference(openedItems, pathToMenuItem), (item) => {
+        item.toggleOpen(); // close item
+      });
+      menuItem.toggleOpen();
+      return this;
+    };
+
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#manageActiveMenuItem
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Manage the active state of items of the manager sidebar menu. This will ensure that
+     *  only one item is active at a time.
+     *
+     *  @param {SidebarMenuListItem} menuItem The clicked sidebar menu item.
+     *
+     *  @return {SidebarMenu} Current SidebarMenu service
+     */
+    sidebarMenuService.manageActiveMenuItem = (function manageActiveMenuItem() {
+      let prevItem = null;
+      return function manageActiveMenuItemSubFn(menuItem) {
+        if (menuItem.state) {
+          if (prevItem) {
+            prevItem.isActive = false;
+          }
+          _.set(menuItem, 'isActive', true);
+          prevItem = menuItem;
+        }
+      };
+    }());
+
+    /* ----------  STATE CHANGE  ----------*/
+
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#manageStateChange
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Manage the active and open state of items when state is successfuly loaded.
+     *  Called on $stateChangeSuccess.
+     *
+     *  @return {Promise} That resolve when every active subMenu item is loaded
+     */
+    sidebarMenuService.manageStateChange = (function manageStateChange() {
+      function manageStateChangeRecur(items) {
+        return $q.all(_.map(items, (item) => {
+          const stateInfos = getItemStateInfos(item); // eslint-disable-line
+          if (stateInfos.current) {
+            sidebarMenuService.manageActiveMenuItem(item);
+            sidebarMenuService.toggleMenuItemOpenState(item);
+          }
+          if (stateInfos.included) {
+            return item.loadSubItems().then(() => {
+              if (item.hasSubItems() && !item.isOpen) {
+                item.toggleOpen();
+              }
+              sidebarMenuService.manageActiveMenuItem(item);
+              return manageStateChangeRecur(item.getSubItems());
             });
+          }
+          return $q.when(true);
+        }));
+      }
 
-            return self;
-        };
+      return function (menuItems) {
+        return manageStateChangeRecur(menuItems || this.items);
+      };
+    }());
 
-        /* ----------  SIDEBAR ACTIONS  ----------*/
+    /* ----------  ORDER ACTIONS MENU  ----------*/
 
-        /**
-         *  @ngdoc method
-         *  @name sidebarMenu.service:SidebarMenu#manageMenuItemOpenAndActiveState
-         *  @methodOf sidebarMenu.service:SidebarMenu
-         *
-         *  @description
-         *  Manage the open state and the active state of items of the manager sidebar menu.
-         *
-         *  @param {SidebarMenuListItem} menuItem The clicked sidebar menu item.
-         *
-         *  @return {SidebarMenu} Current SidebarMenu service
-         */
-        sidebarMenuService.manageMenuItemOpenAndActiveState = function (menuItem) {
-            var self = this;
-
-            return self.toggleMenuItemOpenState(menuItem).manageActiveMenuItem(menuItem);
-        };
-
-        /**
-         *  @ngdoc method
-         *  @name sidebarMenu.service:SidebarMenu#toggleMenuItemOpenState
-         *  @methodOf sidebarMenu.service:SidebarMenu
-         *
-         *  @description
-         *  Manage the open state of items of the manager sidebar menu. This will ensure that only one item is open at a time.
-         *
-         *  @param {SidebarMenuListItem} menuItem The clicked sidebar menu item.
-         *
-         *  @return {SidebarMenu} Current SidebarMenu service
-         */
-        sidebarMenuService.toggleMenuItemOpenState = function (menuItem) {
-            var self = this;
-            var pathToMenuItem = self.getPathToMenuItem(menuItem).path;
-            var openedItems = _.filter(self.getAllMenuItems(), { isOpen: true });
-
-            // we simply close items that does not belong to the path to menuItem
-            _.each(_.difference(openedItems, pathToMenuItem), function (item) {
-                item.toggleOpen(); // close item
-            });
-            menuItem.toggleOpen();
-            return self;
-        };
-
-        /**
-         *  @ngdoc method
-         *  @name sidebarMenu.service:SidebarMenu#manageActiveMenuItem
-         *  @methodOf sidebarMenu.service:SidebarMenu
-         *
-         *  @description
-         *  Manage the active state of items of the manager sidebar menu. This will ensure that only one item is active at a time.
-         *
-         *  @param {SidebarMenuListItem} menuItem The clicked sidebar menu item.
-         *
-         *  @return {SidebarMenu} Current SidebarMenu service
-         */
-        sidebarMenuService.manageActiveMenuItem = (function () {
-            var prevItem = null;
-            return function (menuItem) {
-                if (menuItem.state) {
-                    if (prevItem) {
-                        prevItem.isActive = false;
-                    }
-                    menuItem.isActive = true;
-                    prevItem = menuItem;
-                }
-            };
-        })();
-
-        /* ----------  STATE CHANGE  ----------*/
-
-        /**
-         *  @ngdoc method
-         *  @name sidebarMenu.service:SidebarMenu#manageStateChange
-         *  @methodOf sidebarMenu.service:SidebarMenu
-         *
-         *  @description
-         *  Manage the active and open state of items when state is successfuly loaded. Called on $stateChangeSuccess.
-         *
-         *  @return {Promise} That resolve when every active subMenu item is loaded
-         */
-        sidebarMenuService.manageStateChange = (function () {
-
-            function manageStateChangeRecur (items) {
-                return $q.all(_.map(items, function (item) {
-                    var stateInfos = getItemStateInfos(item);
-                    if (stateInfos.current) {
-                        sidebarMenuService.manageActiveMenuItem(item);
-                        sidebarMenuService.toggleMenuItemOpenState(item);
-                    }
-                    if (stateInfos.included) {
-                        return item.loadSubItems().then(function () {
-                            if (item.hasSubItems() && !item.isOpen) {
-                                item.toggleOpen();
-                            }
-                            sidebarMenuService.manageActiveMenuItem(item);
-                            return manageStateChangeRecur(item.getSubItems());
-                        });
-                    }
-                    return $q.when(true);
-                }));
-            }
-
-            return function (menuItems) {
-                return manageStateChangeRecur(menuItems || this.items);
-            };
-        })();
-
-        /* ----------  ORDER ACTIONS MENU  ----------*/
-
-        /**
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#addActionsMenuOption
          *  @methodOf sidebarMenu.service:SidebarMenu
          *
          *  @description
-         *  Add an item to order actions menu inside sidebar menu. See availabe options into actions-menu component.
+         *  Add an item to order actions menu inside sidebar menu.
+         *  See availabe options into actions-menu component.
          *
-         *  @param {Object} actionMenuOptions Options of the action menu to add (see availabe options into actions-menu component).
+         *  @param {Object} actionMenuOptions Options of the action menu to add
+         *  (see availabe options into actions-menu component).
          *
          *  @returns {Object} The added options.
          */
-        sidebarMenuService.addActionsMenuOption = function (actionMenuOptions) {
-            var self = this;
+    sidebarMenuService.addActionsMenuOption = function addActionsMenuOption(actionMenuOptions) {
+      this.actionsMenuOptions.push(actionMenuOptions);
+      return actionMenuOptions;
+    };
 
-            self.actionsMenuOptions.push(actionMenuOptions);
-
-            return actionMenuOptions;
-        };
-
-        /**
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#addActionsMenuOptions
          *  @methodOf sidebarMenu.service:SidebarMenu
          *
          *  @description
-         *  Add multiple items to order actions menu inside sidebar menu. See availabe options into actions-menu component.
+         *  Add multiple items to order actions menu inside sidebar menu.
+         *  See availabe options into actions-menu component.
          *
-         *  @param {Array<Object>} actionMenuOptionsList List of options for adding entries into order actions menu (see availabe options into actions-menu component).
+         *  @param {Array<Object>} actionMenuOptionsList List of options for adding entries into
+         *  order actions menu (see availabe options into actions-menu component).
          *
          *  @returns {Array<Object>} The list of item options.
          */
-        sidebarMenuService.addActionsMenuOptions = function (actionMenuOptionsList) {
-            var self = this;
+    sidebarMenuService.addActionsMenuOptions = function addActionsMenuOptions(
+      actionMenuOptionsList,
+    ) {
+      angular.forEach(actionMenuOptionsList, (actionMenuOptions) => {
+        this.addActionsMenuOption(actionMenuOptions);
+      });
 
-            angular.forEach(actionMenuOptionsList, function (actionMenuOptions) {
-                self.addActionsMenuOption(actionMenuOptions);
-            });
+      return actionMenuOptionsList;
+    };
 
-            return actionMenuOptionsList;
-        };
+    /* ----------  HELPERS  ----------*/
 
-        /* ----------  HELPERS  ----------*/
+    function getItemStateInfos(item) {
+      const infos = {
+        included: false,
+        current: false,
+      };
+      if (item.loadOnState) {
+        infos.included = $state.includes(item.loadOnState, item.loadOnStateParams);
+        infos.current = $state.is(item.loadOnState, item.loadOnStateParams);
+      } else if (item.state) {
+        infos.included = $state.includes(item.state, item.stateParams);
+        infos.current = $state.is(item.state, item.stateParams);
+      }
+      return infos;
+    }
 
-        function getItemStateInfos (item) {
-            var infos = {
-                included: false,
-                current: false
-            };
-            if (item.loadOnState) {
-                infos.included = $state.includes(item.loadOnState, item.loadOnStateParams);
-                infos.current = $state.is(item.loadOnState, item.loadOnStateParams);
-            } else if (item.state) {
-                infos.included = $state.includes(item.state, item.stateParams);
-                infos.current = $state.is(item.state, item.stateParams);
-            }
-            return infos;
-        }
-
-        /**
+    /**
          * @ngdoc method
          * @name sidebarMenu.service:SidebarMenu#getPathToMenuItem
          * @methodOf sidebarMenu.service:SidebarMenu
@@ -446,31 +460,37 @@ export default function () {
          *
          * @return {Object} Search result : { found: true/false, path: [] }
          */
-        sidebarMenuService.getPathToMenuItem = function (item, items, currentSearch) {
-            var self = this;
-            currentSearch = currentSearch || { found: false, path: [] };
-            if (!angular.isObject(item) || !item.id) {
-                return currentSearch;
-            }
-            items = items || self.items;
-            if (_.find(items, { id: item.id })) {
-                currentSearch.found = true;
-                currentSearch.path.push(item);
-            } else {
-                _.each(items, function (child) {
-                    if (!currentSearch.found && child.hasSubItems()) {
-                        currentSearch.path.push(child);
-                        currentSearch = self.getPathToMenuItem(item, child.getSubItems(), currentSearch);
-                        if (!currentSearch.found) {
-                            currentSearch.path.pop();
-                        }
-                    }
-                });
-            }
-            return currentSearch;
-        };
+    sidebarMenuService.getPathToMenuItem = function getPathToMenuItem(
+      item,
+      itemsParam,
+      currentSearchParam,
+    ) {
+      let items = itemsParam;
+      let currentSearch = currentSearchParam;
 
-        /**
+      currentSearch = currentSearch || { found: false, path: [] };
+      if (!angular.isObject(item) || !item.id) {
+        return currentSearch;
+      }
+      items = items || this.items;
+      if (_.find(items, { id: item.id })) {
+        currentSearch.found = true;
+        currentSearch.path.push(item);
+      } else {
+        _.each(items, (child) => {
+          if (!currentSearch.found && child.hasSubItems()) {
+            currentSearch.path.push(child);
+            currentSearch = this.getPathToMenuItem(item, child.getSubItems(), currentSearch);
+            if (!currentSearch.found) {
+              currentSearch.path.pop();
+            }
+          }
+        });
+      }
+      return currentSearch;
+    };
+
+    /**
          * @ngdoc method
          * @name sidebarMenu.service:SidebarMenu#getAllMenuItems
          * @methodOf sidebarMenu.service:SidebarMenu
@@ -480,23 +500,23 @@ export default function () {
          *
          * @return {Array} Array of menu items
          */
-        sidebarMenuService.getAllMenuItems = (function () {
-            function flattenSubItems (items) {
-                var mapped = _.map(items, function (item) {
-                    return flattenSubItems(item.getSubItems());
-                });
-                _.each(mapped, function (item) {
-                    items = items.concat(item);
-                });
-                return items;
-            }
+    sidebarMenuService.getAllMenuItems = (function getAllMenuItems() {
+      function flattenSubItems(itemsParam) {
+        let items = itemsParam;
 
-            return function () {
-                return flattenSubItems(this.items || []);
-            };
-        })();
+        const mapped = _.map(items, item => flattenSubItems(item.getSubItems()));
+        _.each(mapped, (item) => {
+          items = items.concat(item);
+        });
+        return items;
+      }
 
-        /**
+      return function () {
+        return flattenSubItems(this.items || []);
+      };
+    }());
+
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#getItemById
          *  @methodOf sidebarMenu.service:SidebarMenu
@@ -510,32 +530,32 @@ export default function () {
          *
          *  @return {SidebarMenuListItem} The founded SidebarMenuListItem with given id.
          */
-        sidebarMenuService.getItemById = (function () {
-            var itemsMap = {}; // hash of itemId => item
-            var found = false;
+    sidebarMenuService.getItemById = (function () {
+      const itemsMap = {}; // hash of itemId => item
+      let found = false;
 
-            function findRecursive (itemList, itemId) {
-                if (!found && itemList && itemList.length) {
-                    found = _.find(itemList, { id: itemId });
-                    _.each(itemList, function (item) {
-                        findRecursive(item.getSubItems(), itemId);
-                    });
-                }
-            }
+      function findRecursive(itemList, itemId) {
+        if (!found && itemList && itemList.length) {
+          found = _.find(itemList, { id: itemId });
+          _.each(itemList, (item) => {
+            findRecursive(item.getSubItems(), itemId);
+          });
+        }
+      }
 
-            return function (itemId, items) {
-                found = itemsMap[itemId];
-                findRecursive(items || this.items, itemId);
-                if (found) {
-                    itemsMap[itemId] = found; // cache search result
-                }
-                return found;
-            };
-        })();
+      return function (itemId, items) {
+        found = itemsMap[itemId];
+        findRecursive(items || this.items, itemId);
+        if (found) {
+          itemsMap[itemId] = found; // cache search result
+        }
+        return found;
+      };
+    }());
 
-        /* ----------  ITEM DISPLAY UPDATE  ----------*/
+    /* ----------  ITEM DISPLAY UPDATE  ----------*/
 
-        /**
+    /**
          *  @ngdoc method
          *  @name sidebarMenu.service:SidebarMenu#updateItemDisplay
          *  @methodOf sidebarMenu.service:SidebarMenu
@@ -554,18 +574,18 @@ export default function () {
          *
          *  @return {SidebarMenuListItem} The founded SidebarMenuListItem with given id.
          */
-        sidebarMenuService.updateItemDisplay = function (displayOptions, itemId) {
-            var self = this;
-            var item = self.getItemById(itemId);
-            if (item) {
-                displayOptions = _.pick(displayOptions, _.identity); // remove falsy attributes
-                displayOptions = _.pick(displayOptions, ["title", "prefix", "icon", "iconClass", "category", "status"]);
-                _.assign(item, displayOptions);
-            }
-            return item;
-        };
+    sidebarMenuService.updateItemDisplay = function updateItemDisplay(displayOptionsParam, itemId) {
+      let displayOptions = displayOptionsParam;
 
-        return sidebarMenuService;
-    }];
+      const item = this.getItemById(itemId);
+      if (item) {
+        displayOptions = _.pick(displayOptions, _.identity); // remove falsy attributes
+        displayOptions = _.pick(displayOptions, ['title', 'prefix', 'icon', 'iconClass', 'category', 'status']);
+        _.assign(item, displayOptions);
+      }
+      return item;
+    };
 
-};
+    return sidebarMenuService;
+  }];
+}

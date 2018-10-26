@@ -1,48 +1,45 @@
 export default /* @ngInject */ function ($transitions, SidebarMenu) {
-    "use strict";
+  const self = this;
 
-    var self = this;
+  self.loading = {
+    translations: false,
+    init: false,
+  };
 
-    self.loading = {
-        translations: false,
-        init: false
-    };
+  self.items = null;
 
-    self.items = null;
-
-    /*= =====================================
+  /*= =====================================
     =            INITIALIZATION            =
-    ======================================*/
+    ====================================== */
 
-    /* ----------  STATE CHANGE  ----------*/
+  /* ----------  STATE CHANGE  ----------*/
 
-    function initStateChangeSuccess () {
-        $transitions.onSuccess({}, function () {
-            SidebarMenu.manageStateChange();
-        });
-    }
+  function initStateChangeSuccess() {
+    $transitions.onSuccess({}, () => {
+      SidebarMenu.manageStateChange();
+    });
+  }
 
-    /* ----------  DIRECTIVE INITIALIZATION  ----------*/
+  /* ----------  DIRECTIVE INITIALIZATION  ----------*/
 
-    function init () {
-        self.loading.init = true;
+  function init() {
+    self.loading.init = true;
 
-        return SidebarMenu.loadInit().then(function () {
-            initStateChangeSuccess();
-            self.items = SidebarMenu.items;
-            self.actionsOptions = SidebarMenu.actionsMenuOptions;
-            self.popoverSettings = {
-                placement: "bottom-left",
-                "class": "order-actions-menu-popover",
-                trigger: "outsideClick"
-            };
-        }).finally(function () {
-            self.loading.init = false;
-        });
-    }
+    return SidebarMenu.loadInit().then(() => {
+      initStateChangeSuccess();
+      self.items = SidebarMenu.items;
+      self.actionsOptions = SidebarMenu.actionsMenuOptions;
+      self.popoverSettings = {
+        placement: 'bottom-left',
+        class: 'order-actions-menu-popover',
+        trigger: 'outsideClick',
+      };
+    }).finally(() => {
+      self.loading.init = false;
+    });
+  }
 
-    /* -----  End of INITIALIZATION  ------*/
+  /* -----  End of INITIALIZATION  ------*/
 
-    init();
-
-};
+  init();
+}

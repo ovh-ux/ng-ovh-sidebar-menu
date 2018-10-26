@@ -18,13 +18,19 @@ import sidebarMenuList from './ovh-angular-sidebar-menu-list/ovh-angular-sidebar
 import sideMenuDirective from './ovh-angular-sidebar-menu.directive';
 import SidebarMenuProvider from './ovh-angular-sidebar-menu.provider';
 
-export default angular
-    .module("ovh-angular-sidebar-menu", [
-        uiRouter,
-        translate,
-        actionsMenu,
-        sidebarMenuList
-    ])
-    .provider("SidebarMenu", SidebarMenuProvider)
-    .directive("sidebarMenu", sideMenuDirective)
-    .name;
+import './less/ovh-angular-sidebar-menu.less';
+
+const moduleName = 'ovh-angular-sidebar-menu';
+
+angular
+  .module(moduleName, [
+    uiRouter,
+    translate,
+    actionsMenu,
+    sidebarMenuList,
+  ])
+  .provider('SidebarMenu', SidebarMenuProvider)
+  .directive('sidebarMenu', sideMenuDirective)
+  .run(/* @ngTranslationsInject ./translations */);
+
+export default moduleName;
