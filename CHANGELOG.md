@@ -1,3 +1,16 @@
+<a name="8.0.0-alpha.0"></a>
+# [8.0.0-alpha.0](https://github.com/ovh-ux/ovh-angular-sidebar-menu/compare/v7.0.0...v8.0.0-alpha.0) (2018-10-26)
+
+
+### Bug Fixes
+
+* use ui-kit sidebar style and vs-repeat ([ceb9167](https://github.com/ovh-ux/ovh-angular-sidebar-menu/commit/ceb9167))
+* **ngAnnotate:** add ngInject ([14ede59](https://github.com/ovh-ux/ovh-angular-sidebar-menu/commit/14ede59))
+* **package:** add files entry ([23d2d0e](https://github.com/ovh-ux/ovh-angular-sidebar-menu/commit/23d2d0e))
+* **sidebar:** add ngInject annotation ([4c8b815](https://github.com/ovh-ux/ovh-angular-sidebar-menu/commit/4c8b815))
+
+
+
 # Change log
 
 [5.1.0]
