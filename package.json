@@ -5,24 +5,24 @@
   "keywords": [
     "angular"
   ],
-  "main": "./dist/ovh-angular-sidebar-menu.js",
   "repository": "ovh-ux/ovh-angular-sidebar-menu",
-  "scripts": {
-    "test": "yarn run lint",
-    "lint": "run-p lint:html lint:css lint:js",
-    "lint:html": "htmlhint 'src/**/*.html'",
-    "lint:css": "stylelint 'src/**/*.less' --fix",
-    "lint:js": "eslint --quiet --fix ./src",
-    "version": "npx conventional-changelog-cli -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "postversion": "git push && git push --tags",
-    "build": "rollup -c",
-    "prepare": "rollup -c"
-  },
   "license": "BSD-3-Clause",
   "author": "OVH SAS",
   "files": [
     "dist"
   ],
+  "main": "./dist/ovh-angular-sidebar-menu.js",
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "run-p lint:html lint:css lint:js",
+    "lint:css": "stylelint 'src/**/*.less' --fix",
+    "lint:html": "htmlhint 'src/**/*.html'",
+    "lint:js": "eslint --quiet --fix ./src",
+    "prepare": "rollup -c",
+    "test": "yarn run lint",
+    "version": "npx conventional-changelog-cli -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "postversion": "git push && git push --tags"
+  },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
@@ -43,8 +43,8 @@
     "stylelint-config-standard": "^18.2.0"
   },
   "peerDependencies": {
-    "angular": "1.6.10",
     "@uirouter/angularjs": "^1.0.15",
+    "angular": "1.6.10",
     "angular-translate": "^2.17.0",
     "angular-vs-repeat": "^2.0.9",
     "lodash": "~3.0.1",
