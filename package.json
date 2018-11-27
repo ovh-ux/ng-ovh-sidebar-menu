@@ -1,6 +1,6 @@
 {
   "name": "ovh-angular-sidebar-menu",
-  "version": "8.0.0-alpha.0",
+  "version": "8.0.0-alpha.1",
   "description": "Manage and display a left menu tree",
   "keywords": [
     "angular"

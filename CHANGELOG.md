@@ -1,3 +1,12 @@
+# [8.0.0-alpha.1](https://github.com/ovh-ux/ovh-angular-sidebar-menu/compare/v8.0.0-alpha.0...v8.0.0-alpha.1) (2018-11-27)
+
+
+### Bug Fixes
+
+* bump npm-run-all@4.1.5 ([7837deb](https://github.com/ovh-ux/ovh-angular-sidebar-menu/commit/7837deb))
+
+
+
 <a name="8.0.0-alpha.0"></a>
 # [8.0.0-alpha.0](https://github.com/ovh-ux/ovh-angular-sidebar-menu/compare/v7.0.0...v8.0.0-alpha.0) (2018-10-26)
 
