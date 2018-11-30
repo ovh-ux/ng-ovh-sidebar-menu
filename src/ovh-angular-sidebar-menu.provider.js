@@ -370,6 +370,17 @@ export default function () {
           }
           if (stateInfos.included) {
             return item.loadSubItems().then(() => {
+              // Automatically close same level opened item if it is not current one
+              const openedItem = _.find(sidebarMenuService.getAllMenuItems(), {
+                isOpen: true,
+                level: item.level,
+              });
+              const someItemIsOpened = openedItem != null;
+
+              if (someItemIsOpened && openedItem.id !== item.id) {
+                openedItem.toggleOpen();
+              }
+
               if (item.hasSubItems() && !item.isOpen) {
                 item.toggleOpen();
               }
