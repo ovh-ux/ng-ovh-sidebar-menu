@@ -29,7 +29,7 @@
     "@babel/preset-env": "^7.1.0",
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-angular": "^7.1.2",
-    "@ovh-ux/component-rollup-config": "^2.0.0",
+    "@ovh-ux/component-rollup-config": "^5.0.0-beta.2",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
