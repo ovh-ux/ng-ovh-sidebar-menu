@@ -1,3 +1,12 @@
+# [8.0.0-alpha.3](https://github.com/ovh-ux/ovh-angular-sidebar-menu/compare/v8.0.0-alpha.1...v8.0.0-alpha.3) (2018-12-10)
+
+
+### Bug Fixes
+
+* **provider:** close automatic menu item on change state ([dcf0dda](https://github.com/ovh-ux/ovh-angular-sidebar-menu/commit/dcf0dda))
+
+
+
 # [8.0.0-alpha.2](https://github.com/ovh-ux/ovh-angular-sidebar-menu/compare/v8.0.0-alpha.1...v8.0.0-alpha.2) (2018-12-10)
 
 
