@@ -1,3 +1,12 @@
+# [8.0.0-alpha.4](https://github.com/ovh-ux/ovh-angular-sidebar-menu/compare/v8.0.0-alpha.3...v8.0.0-alpha.4) (2018-12-17)
+
+
+### Bug Fixes
+
+* **a11y:** remove useless aria role on link ([c50ba7e](https://github.com/ovh-ux/ovh-angular-sidebar-menu/commit/c50ba7e))
+
+
+
 # [8.0.0-alpha.3](https://github.com/ovh-ux/ovh-angular-sidebar-menu/compare/v8.0.0-alpha.1...v8.0.0-alpha.3) (2018-12-10)
 
 
