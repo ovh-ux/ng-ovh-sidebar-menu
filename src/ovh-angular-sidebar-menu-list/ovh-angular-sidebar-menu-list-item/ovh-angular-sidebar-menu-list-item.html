@@ -4,8 +4,6 @@
     data-ng-if="ItemMenuCtrl.item.state"
     data-ng-click="ItemMenuCtrl.toggleItemOpenState()"
     data-ui-sref="{{ :: ItemMenuCtrl.item.getFullSref() }}"
-    aria-haspopup="{{ItemMenuCtrl.item.allowSubItems}}"
-    aria-expanded="{{ItemMenuCtrl.item.isOpen || ItemMenuCtrl.item.isActive}}"
     data-ng-class="{
         'oui-sidebar-link_active' : ItemMenuCtrl.item.isActive
     }">
