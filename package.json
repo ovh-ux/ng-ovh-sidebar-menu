@@ -26,9 +26,6 @@
     "postversion": "git push && git push --tags"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-angular": "^7.1.2",
     "@ovh-ux/component-rollup-config": "^5.0.0-beta.2",
