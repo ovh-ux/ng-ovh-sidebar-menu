@@ -12,6 +12,7 @@
     "dist"
   ],
   "main": "./dist/cjs/ovh-angular-sidebar-menu.js",
+  "module": "./dist/esm/ovh-angular-sidebar-menu.js",
   "browser": "./dist/umd/ovh-angular-sidebar-menu.js",
   "scripts": {
     "build": "rollup -c",
