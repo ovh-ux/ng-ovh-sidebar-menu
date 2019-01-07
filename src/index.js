@@ -13,24 +13,24 @@ import '@uirouter/angularjs';
 import 'angular-translate';
 import 'ovh-angular-actions-menu';
 
-import sidebarMenuList from './ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list';
+import ngOvhSidebarMenuList from './list';
 
-import sideMenuDirective from './ovh-angular-sidebar-menu.directive';
-import SidebarMenuProvider from './ovh-angular-sidebar-menu.provider';
+import directive from './directive';
+import provider from './provider';
 
-import './less/ovh-angular-sidebar-menu.less';
+import './index.less';
 
-const moduleName = 'ovh-angular-sidebar-menu';
+const moduleName = 'ngOvhSidebarMenu';
 
 angular
   .module(moduleName, [
     'ui.router',
     'pascalprecht.translate',
     'ovh-angular-actions-menu',
-    sidebarMenuList,
+    ngOvhSidebarMenuList,
   ])
-  .provider('SidebarMenu', SidebarMenuProvider)
-  .directive('sidebarMenu', sideMenuDirective)
+  .provider('SidebarMenu', provider)
+  .directive('sidebarMenu', directive)
   .run(/* @ngTranslationsInject ./translations */);
 
 export default moduleName;

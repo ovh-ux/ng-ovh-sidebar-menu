@@ -14,7 +14,7 @@
 import angular from 'angular';
 import _ from 'lodash';
 
-import template from './ovh-angular-sidebar-menu-list-item.html';
+import template from './template.html';
 
 export default /* @ngInject */ function ($compile) {
   return {

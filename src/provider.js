@@ -23,7 +23,7 @@
 import angular from 'angular';
 import _ from 'lodash';
 
-import innerMenuItemTemplate from './ovh-angular-sidebar-menu-list/ovh-angular-sidebar-menu-list-item/ovh-angular-sidebar-menu-list-item-inner.html';
+import innerMenuItemTemplate from './list/item/list-item-inner.html';
 
 export default function () {
   const self = this;

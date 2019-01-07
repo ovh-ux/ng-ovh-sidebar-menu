@@ -11,16 +11,16 @@
  *  <p>Basically, the directive will load the other module's directives (sidebarMenuMenu and
  *  sidebarMenuMenuItem).</p>
  */
-import SidebarMenuCtrl from './ovh-angular-sidebar-menu.controller';
-import template from './ovh-angular-sidebar-menu.html';
+import controller from './controller';
+import template from './template.html';
 
 export default function () {
   return {
     template,
     restrict: 'A',
     replace: true,
+    controller,
     controllerAs: 'sideBarCtrl',
-    controller: SidebarMenuCtrl,
     scope: {
       sidebarNamespace: '=',
     },
