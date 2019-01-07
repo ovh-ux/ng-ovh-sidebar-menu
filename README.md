@@ -59,67 +59,72 @@ In your web page:
 
 In your main app.js file:
 
-```javascript
-angular.module("myManagerModule", [
-    ...
-    "ovh-angular-sidebar-menu"
-    ...
-]);
+```js
+import angular from 'angular';
+
+angular
+  .module('myApp', [
+    'ovh-angular-sidebar-menu',
+  ]);
 ```
 
 During angular run phase, add ``ovh-angular-sidebar-menu`` service as dependency and add "root" items to manager sidebar menu:
 
-```javascript
-angular.module("myManagerModule").run(function ($translate, sidebarMenu, myResourceService) {
-    var self = this;
+```js
+import angular from 'angular';
+
+angular
+  .module('myManagerModule')
+  .run(/* @ngInject */ function ($translate, SidebarMenu, myResourceService) {
+    const self = this;
 
     self.mainSectionItem = null;
 
-    function myFunctionThatReturnAPromise () {
-        return myResourceService.Lexi().query().$promise.then(function (datas) {
-            angular.forEach(datas, function (data) {
-                SidebarMenu.addMenuItem({
-                    title: data.description || data.serviceName,
-                    id: data.serviceName,
-                    state: "mymanager.state.subState",
-                    stateParams: {
-                        foo : "test",
-                        test : "foo"
-                    }
-                }, self.mainSectionItem);
-            });
+    function myFunctionThatReturnAPromise() {
+      return myResourceService.Lexi().query().$promise.then((datas) => {
+        angular.forEach(datas, (data) => {
+          SidebarMenu.addMenuItem({
+            title: data.description || data.serviceName,
+            id: data.serviceName,
+            state: 'mymanager.state.subState',
+            stateParams: {
+              foo: 'test',
+              test: 'foo',
+            },
+          }, self.mainSectionItem);
         });
+      });
     }
 
     // wait that sidebar is loaded (wait that translations are loaded)
-    SidebarMenu.loadDeferred.promise.then(function () {
-        // creating a level 1 item
-        self.mainSectionItem = SidebarMenu.addMenuItem({
-            title: $translate.instant("translation_key"),
-            category: "my-category",
-            icon: "myOvhFontIconName",
-            allowSubItems: true,
-            onLoad: myFunctionThatReturnAPromise,
-            loadOnState: "mymanager.state"
-        });
+    SidebarMenu.loadDeferred.promise.then(() => {
+      // creating a level 1 item
+      self.mainSectionItem = SidebarMenu.addMenuItem({
+        title: $translate.instant('translation_key'),
+        category: 'my-category',
+        icon: 'myOvhFontIconName',
+        allowSubItems: true,
+        onLoad: myFunctionThatReturnAPromise,
+        loadOnState: 'mymanager.state',
+      });
 
-        // confugure order menu items
-        SidebarMenu.addActionsMenuOptions([{
-            title: $translate.instant("order_translation_key1"),
-            icon: "myOvhFontIconName1",
-            href: "https://www.ovh.com/",
-            target: "_blank"
-        }, {
-            title: $translate.instant("order_translation_key2"),
-            icon: "myOvhFontIconName2",
-            href: "#/my-order/dest"
-        }, {
-            title: $translate.instant("order_translation_key3"),
-            icon: "myOvhFontIconName3",
-            href: "#/my-order/dest2"
-        }]);
+      // configure order menu items
+      SidebarMenu.addActionsMenuOptions([{
+        title: $translate.instant('order_translation_key1'),
+        icon: 'myOvhFontIconName1',
+        href: 'https://www.ovh.com/',
+        target: '_blank',
+      }, {
+        title: $translate.instant('order_translation_key2'),
+        icon: 'myOvhFontIconName2',
+        href: '#/my-order/dest',
+      }, {
+        title: $translate.instant('order_translation_key3'),
+        icon: 'myOvhFontIconName3',
+        href: '#/my-order/dest2',
+      }]);
     });
-});
+  });
 ```
 
 This code will add an item into manager sidebar menu and when current state will be "mymanager.state" or when it will be clicked, it will load sub items.
@@ -143,16 +148,16 @@ Some vars can be configured in manager app less part under #sidebar-menu namespa
 
 ## Development
 
-To start developping on this module, launch:
+To start developing on this module, launch:
 
-```
-# make install
+```sh
+make install
 ```
 
 This will install npm and bower dependencies. Then launch:
 
-```
-# grunt watch
+```sh
+grunt watch
 ```
 
 And start developing.
@@ -163,8 +168,8 @@ And start developing.
 
 For a full documentation of the module, launch:
 
-```
-# grunt ngdocs && grunt connect
+```sh
+grunt ngdocs && grunt connect
 ```
 
 Then go on `http://localhost:9090`.
