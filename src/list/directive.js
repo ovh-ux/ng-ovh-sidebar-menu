@@ -13,7 +13,7 @@
  */
 
 import angular from 'angular';
-import template from './ovh-angular-sidebar-menu-list.html';
+import template from './template.html';
 
 export default function () {
   return {
