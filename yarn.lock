@@ -786,6 +786,13 @@
     rollup-pluginutils "^2.3.3"
     slash "^2.0.0"
 
+"@ovh-ux/ng-ovh-actions-menu@^5.0.0-alpha.0":
+  version "5.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@ovh-ux/ng-ovh-actions-menu/-/ng-ovh-actions-menu-5.0.0-alpha.0.tgz#734b82586e15b8d3129bde5ab5625042db14d558"
+  integrity sha512-cl7GCchFc6apUUXuaASNXpEWd8znR2sQt8ntu9FHTfB/G1trdFaKpzVfm87eABW+LuXi0s8FSi1RrcyTEF8Vlw==
+  dependencies:
+    lodash "^4.17.11"
+
 "@ovh-ux/rollup-plugin-less-tilde-importer@^1.0.0-beta.0":
   version "1.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/@ovh-ux/rollup-plugin-less-tilde-importer/-/rollup-plugin-less-tilde-importer-1.0.0-beta.0.tgz#eaf065c6e1fd039db0ddfb2f30955aec987e0c63"
