@@ -44,12 +44,12 @@
     "stylelint-config-standard": "^18.2.0"
   },
   "peerDependencies": {
+    "@ovh-ux/ng-ovh-actions-menu": "^5.0.0-alpha.0",
     "@uirouter/angularjs": "^1.0.15",
     "angular": "1.6.10",
     "angular-translate": "^2.17.0",
     "angular-vs-repeat": "^2.0.9",
     "lodash": "~3.0.1",
-    "ovh-angular-actions-menu": "^4.0.0",
     "ovh-ui-kit": "^2.21.5"
   }
 }

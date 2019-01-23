@@ -9,9 +9,10 @@
  */
 
 import angular from 'angular';
+
+import '@ovh-ux/ng-ovh-actions-menu';
 import '@uirouter/angularjs';
 import 'angular-translate';
-import 'ovh-angular-actions-menu';
 
 import ngOvhSidebarMenuList from './list';
 
@@ -24,10 +25,10 @@ const moduleName = 'ngOvhSidebarMenu';
 
 angular
   .module(moduleName, [
-    'ui.router',
-    'pascalprecht.translate',
-    'ovh-angular-actions-menu',
+    'ngOvhActionsMenu',
     ngOvhSidebarMenuList,
+    'pascalprecht.translate',
+    'ui.router',
   ])
   .provider('SidebarMenu', provider)
   .directive('sidebarMenu', directive)
