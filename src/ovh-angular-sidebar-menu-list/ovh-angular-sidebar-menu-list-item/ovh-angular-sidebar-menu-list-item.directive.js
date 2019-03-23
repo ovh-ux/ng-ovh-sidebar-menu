@@ -136,6 +136,10 @@ angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuListItem", func
                 return true;
             };
 
+            self.setAsActive = function () {
+                SidebarMenu.manageActiveMenuItem(self.item);
+            };
+
             self.toggleItemOpenState = function () {
                 self.errorVisible = false;
 

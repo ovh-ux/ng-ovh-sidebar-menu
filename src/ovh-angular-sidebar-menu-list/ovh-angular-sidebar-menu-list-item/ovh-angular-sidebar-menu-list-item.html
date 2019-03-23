@@ -3,7 +3,7 @@
     <!-- item has sref and allow sub items -->
     <a class="menu-item"
        data-ng-if="ItemMenuCtrl.item.state"
-       data-ng-click="ItemMenuCtrl.toggleItemOpenState()"
+       data-ng-click="ItemMenuCtrl.toggleItemOpenState() && ItemMenuCtrl.setAsActive()"
        data-ui-sref="{{ :: ItemMenuCtrl.item.getFullSref() }}"
        data-ng-include="ItemMenuCtrl.getInnerTemplateUrl()">
     </a>

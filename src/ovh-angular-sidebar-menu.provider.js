@@ -398,8 +398,8 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
                 }));
             }
 
-            return function (menuItems) {
-                return manageStateChangeRecur(menuItems || this.items);
+            return function () {
+                return manageStateChangeRecur(this.items);
             };
         })();
 

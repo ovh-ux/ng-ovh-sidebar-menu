@@ -14,21 +14,12 @@ angular.module("ovh-angular-sidebar-menu").controller("SidebarMenuCtrl", functio
     =            INITIALIZATION            =
     ======================================*/
 
-    /* ----------  STATE CHANGE  ----------*/
-
-    function initStateChangeSuccess () {
-        $transitions.onSuccess({}, function () {
-            SidebarMenu.manageStateChange();
-        });
-    }
-
     /* ----------  DIRECTIVE INITIALIZATION  ----------*/
 
     function init () {
         self.loading.init = true;
 
         return SidebarMenu.loadInit().then(function () {
-            initStateChangeSuccess();
             self.items = SidebarMenu.items;
             self.actionsOptions = SidebarMenu.actionsMenuOptions;
             self.onActionsMenuSelectionOption = SidebarMenu.dispatchActionsMenuItemClick.bind(SidebarMenu);
