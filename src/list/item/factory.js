@@ -141,7 +141,7 @@ export default /* @ngInject */ function ($q, $timeout) {
     // view more
     this.viewMore = options.viewMore || null;
 
-    this.isOpen = false;
+    this.isOpen = options.isOpen || false;
     this.isActive = false;
 
     // string to perform search on

@@ -4,9 +4,11 @@
     data-ng-if="ItemMenuCtrl.item.state"
     data-ng-click="ItemMenuCtrl.toggleItemOpenState()"
     data-ui-sref="{{ :: ItemMenuCtrl.item.getFullSref() }}"
+    ui-sref-active="oui-sidebar-link_active"
     data-ng-class="{
         'oui-sidebar-link_active' : ItemMenuCtrl.item.isActive
-    }">
+    }"
+    >
 
     <!-- ITEM ICON -->
     <span class="item-icon"
@@ -162,7 +164,6 @@
                 <span class="oui-icon oui-icon-chevron-left" aria-hidden="true"></span>
             </button>
         </div>
-        <!-- <span class="oui-sidebar-menu__breadcrumb">BREADCRUMB</span> -->
         <p class="oui-sidebar-menu__title" data-ng-bind="ItemMenuCtrl.item.title"></p>
     </header>
 </div>

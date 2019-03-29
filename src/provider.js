@@ -28,49 +28,11 @@ import innerMenuItemTemplate from './list/item/list-item-inner.html';
 export default function () {
   const self = this;
 
-  let translationPaths = ['../bower_components/ovh-angular-sidebar-menu/dist/ovh-angular-sidebar-menu'];
   let minItemsForEnablingSearch = 10;
 
   /*= ====================================
     =            CONFIGURATION            =
     ===================================== */
-
-  /* ----------  TRANSLATION  ----------*/
-
-  /**
-     *  @ngdoc function
-     *  @name sidebarMenu.SidebarMenuProvider#clearTranslationPath
-     *  @methodOf sidebarMenu.SidebarMenuProvider
-     *
-     *  @description
-     *  Clear translations path
-     *
-     *  @return {Array} The list of translations to load.
-     */
-  self.clearTranslationPath = function clearTranslationPath() {
-    translationPaths = [];
-    return translationPaths;
-  };
-
-  /**
-     *  @ngdoc function
-     *  @name sidebarMenu.SidebarMenuProvider#addTranslationPath
-     *  @methodOf sidebarMenu.SidebarMenuProvider
-     *
-     *  @description
-     *  Allows you to add an extra translations path when manager sidebar is loading.
-     *
-     *  @param {String} translationPath The translations file path to add.
-     *
-     *  @return {Array} The list of translations to load.
-     */
-  self.addTranslationPath = function addTranslationPath(translationPath) {
-    if (translationPath) {
-      translationPaths.push(translationPath);
-    }
-
-    return translationPaths;
-  };
 
   /* ----------  INNER MENU ITEM TEMPLATE  ----------*/
 
@@ -117,6 +79,7 @@ export default function () {
       actionsMenuOptions: [],
       loadDeferred: $q.defer(),
       initPromise: $q.when(true),
+      shouldToggleMenuItemOpenState: true,
     };
 
     /* ----------  INITIALIZATION LOADING  ----------*/
@@ -157,33 +120,12 @@ export default function () {
          */
     sidebarMenuService.loadInit = function loadInit() {
       return $q.all({
-        translations: this.loadTranslations(),
         init: this.initPromise,
       }).then((data) => {
         this.loadDeferred.resolve(data.init);
         this.manageStateChange();
         return this.loadDeferred.promise;
       });
-    };
-
-    /* ----------  TRANSLATIONS  ----------*/
-
-    /**
-     *  @ngdoc method
-     *  @name sidebarMenu.service:SidebarMenu#loadTranslations
-     *  @methodOf sidebarMenu.service:SidebarMenu
-     *
-     *  @description
-     *  Load the default translations of manager sidebar component and the extra translations
-     *  files that you have added (if some).
-     *
-     *  @return {Promise} void
-     */
-    sidebarMenuService.loadTranslations = function () {
-      // angular.forEach(translationPaths, function (translationPath) {
-      //     $translatePartialLoader.addPart(translationPath);
-      // });
-      // return $translate.refresh();
     };
 
     /* ----------  GETTER  ----------*/
@@ -214,7 +156,7 @@ export default function () {
          *
          *  @return {Number} The minimum items length for enabling search.
          */
-    sidebarMenuService.getMinItemsForEnablingSearch = function () {
+    sidebarMenuService.getMinItemsForEnablingSearch = function getMinItemsForEnablingSearch() {
       return minItemsForEnablingSearch;
     };
 
@@ -276,6 +218,23 @@ export default function () {
       return this;
     };
 
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:clearMenuItems#addMenuItems
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Remove all current items
+     *
+     *  @return {SidebarMenu} Current SidebarMenu service
+     */
+
+    sidebarMenuService.clearMenuItems = function clearMenuItems() {
+      this.items = [];
+
+      return this;
+    };
+
     /* ----------  SIDEBAR ACTIONS  ----------*/
 
     /**
@@ -296,6 +255,26 @@ export default function () {
       return this.toggleMenuItemOpenState(menuItem).manageActiveMenuItem(menuItem);
     };
 
+
+    /**
+     *  @ngdoc method
+     *  @name sidebarMenu.service:SidebarMenu#setShouldToggleMenuItemOpenState
+     *  @methodOf sidebarMenu.service:SidebarMenu
+     *
+     *  @description
+     *  Manage close of items when one item is clicked
+     *
+     *  @param {SidebarMenuListItem} menuItem The clicked sidebar menu item.
+     *
+     *  @return {SidebarMenu} Current SidebarMenu service
+     */
+
+    sidebarMenuService.setShouldToggleMenuItemOpenState = function setShouldToggleMenuItemOpenState(
+      value,
+    ) {
+      this.shouldToggleMenuItemOpenState = !!value;
+    };
+
     /**
      *  @ngdoc method
      *  @name sidebarMenu.service:SidebarMenu#toggleMenuItemOpenState
@@ -314,10 +293,12 @@ export default function () {
       const openedItems = _.filter(this.getAllMenuItems(), { isOpen: true });
 
       // we simply close items that does not belong to the path to menuItem
-      _.each(_.difference(openedItems, pathToMenuItem), (item) => {
-        item.toggleOpen(); // close item
-      });
-      menuItem.toggleOpen();
+      if (sidebarMenuService.shouldToggleMenuItemOpenState) {
+        _.each(_.difference(openedItems, pathToMenuItem), (item) => {
+          item.toggleOpen(); // close item
+        });
+        menuItem.toggleOpen();
+      }
       return this;
     };
 
