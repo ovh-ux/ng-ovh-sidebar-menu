@@ -504,18 +504,21 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
         /* ----------  HELPERS  ----------*/
 
         function getItemStateInfos (item) {
-            var infos = {
-                included: false,
-                current: false
-            };
-            if (item.loadOnState) {
-                infos.included = $state.includes(item.loadOnState, item.loadOnStateParams);
-                infos.current = $state.is(item.loadOnState, item.loadOnStateParams);
-            } else if (item.state) {
-                infos.included = $state.includes(item.state, item.stateParams);
-                infos.current = $state.is(item.state, item.stateParams);
+            var states = _.get(item, "loadOnState", item.state) || [];
+            var stateParams = item.loadOnState ? item.loadOnStateParams : item.stateParams;
+
+            if (_.isString(states)) {
+                states = [states];
             }
-            return infos;
+
+            return {
+                included: states.some(function (state) {
+                    return $state.includes(state, stateParams);
+                }),
+                current: states.some(function (state) {
+                    return $state.is(state, stateParams);
+                })
+            };
         }
 
         /**
