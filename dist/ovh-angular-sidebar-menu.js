@@ -246,7 +246,7 @@ angular.module("ovh-angular-sidebar-menu").directive("sidebarMenuListItem", ["$c
  *  @param {Boolean} options.viewMore.enabled Should the viewMore button be displayed?
  *  @param {Boolean} options.viewMore.loading Should a loading spinner be displayed near the viewMore button?
  *  @param {Function} options.viewMore.action Custom pagination callback to be called when viewMore button is pressed. If this callback returns a promise, the scrollbar will scroll automatically to the bottom after the promise is resolved (when your paginated items have been added).
- *  @param {String=} options.loadOnState State that will automatically load the menu item. For this to work, states MUST be declared as parent/child (example of state name : parent.child.subchild).
+ *  @param {Array|String=} options.loadOnState State that will automatically load the menu item. For this to work, states MUST be declared as parent/child (example of state name : parent.child.subchild).
  *  @param {Object=} [options.loadOnStateParams={}] StateParams that will that defines the state that will automatically load the menu item. Ignored if no loadOnState option.
  *  @param {Function=} options.onLoad Function called to load sub items. This function MUST return a promise.
  *  @param {Number|String=} [options.parentId=null] Unique id of the parent SidebarMenuListItem.
@@ -1344,18 +1344,21 @@ angular.module("ovh-angular-sidebar-menu").provider("SidebarMenu", function () {
         /* ----------  HELPERS  ----------*/
 
         function getItemStateInfos (item) {
-            var infos = {
-                included: false,
-                current: false
-            };
-            if (item.loadOnState) {
-                infos.included = $state.includes(item.loadOnState, item.loadOnStateParams);
-                infos.current = $state.is(item.loadOnState, item.loadOnStateParams);
-            } else if (item.state) {
-                infos.included = $state.includes(item.state, item.stateParams);
-                infos.current = $state.is(item.state, item.stateParams);
+            var states = _.get(item, "loadOnState", item.state) || [];
+            var stateParams = item.loadOnState ? item.loadOnStateParams : item.stateParams;
+
+            if (_.isString(states)) {
+                states = [states];
             }
-            return infos;
+
+            return {
+                included: states.some(function (state) {
+                    return $state.includes(state, stateParams);
+                }),
+                current: states.some(function (state) {
+                    return $state.is(state, stateParams);
+                })
+            };
         }
 
         /**
