@@ -4614,6 +4614,11 @@ netmask@^1.0.6:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
   integrity sha1-ICl+idhvb2QA8lDZ9Pa0wZRfzTU=
 
+ng-slide-down@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/ng-slide-down/-/ng-slide-down-0.4.2.tgz#d734d823b3369f3ef651d708556a9647cf49d8cb"
+  integrity sha1-1zTYI7M2nz72UdcIVWqWR89J2Ms=
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
@@ -4953,6 +4958,13 @@ osenv@0, osenv@^0.1.4:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
+
+ovh-ui-kit@^2.21.5:
+  version "2.32.0"
+  resolved "https://registry.yarnpkg.com/ovh-ui-kit/-/ovh-ui-kit-2.32.0.tgz#1e003eec0cd2fe5765057b733f6e2640927e4c86"
+  integrity sha512-QGLGbl1UTViyOVzGK+JFdJIi0nZbz0AuR2QTP72bKzFzWBqsQFQgMpg6Njbn/jYIfJlJogMJygWiGnZygm9p7g==
+  dependencies:
+    less-plugin-remcalc "^0.1.0"
 
 p-finally@^1.0.0:
   version "1.0.0"
