@@ -16,7 +16,8 @@
   "browser": "./dist/umd/ng-ovh-sidebar-menu.js",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c --watch",
+    "dev": "rollup -c --environment BUILD:development",
+    "dev:watch": "yarn run dev --watch",
     "lint": "run-p lint:html lint:css lint:js lint:md",
     "lint:css": "stylelint 'src/**/*.less' --fix",
     "lint:html": "htmlhint 'src/**/*.html'",
