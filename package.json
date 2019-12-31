@@ -3,7 +3,11 @@
   "version": "8.4.5",
   "description": "Manage and display a left menu tree",
   "keywords": [
-    "angular"
+    "angularjs",
+    "menu",
+    "ovh",
+    "ovhcloud",
+    "sidebar"
   ],
   "repository": "ovh-ux/ng-ovh-sidebar-menu",
   "license": "BSD-3-Clause",
