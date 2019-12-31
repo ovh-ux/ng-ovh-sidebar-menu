@@ -25,12 +25,9 @@ angular.module('myApp', [ngOvhSidebarMenu]);
 $ yarn test
 ```
 
-## TODO
+## Roadmap
 
-- [ ] custom styles on scroll bar;
-- [ ] virtual scroll;
-- [ ] search into sections;
-- [ ] display show all button when more than 10 items.
+To know what is going on, click [here](./ROADMAP.md).
 
 ## Related
 
