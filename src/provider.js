@@ -466,8 +466,7 @@ export default function () {
         if (isString(item.loadOnState)) {
           infos.included = $state.includes(item.loadOnState, item.loadOnStateParams);
           infos.current = $state.is(item.loadOnState, item.loadOnStateParams);
-        }
-        else if (isArray(item.loadOnState)) {
+        } else if (isArray(item.loadOnState)) {
           infos.included = some(
             item.loadOnState,
             loadOnState => $state.includes(loadOnState, item.loadOnStateParams),
@@ -510,7 +509,7 @@ export default function () {
         return currentSearch;
       }
       items = items || this.items;
-      if (find(items, { id: item.id })) {
+      if (find(items, { id: item.id, parentId: item.parentId })) {
         currentSearch.found = true;
         currentSearch.path.push(item);
       } else {
